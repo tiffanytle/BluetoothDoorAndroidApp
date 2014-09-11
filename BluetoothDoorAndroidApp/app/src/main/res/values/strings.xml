@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">BluetoothDoorAndroidApp</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="button_login">Login</string>
+    <string name="button_newUser">Create New User</string>
+    <string name="title_activity_prompt_password">PromptPassword</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_create_new_user">CreateNewUser</string>
+    <string name="create_user">You are creating a new user!</string>
+    <string name="forgot_password">I forgot my password</string>
+    <string name="title_activity_main_menu">MainMenu</string>
+    <string name="title_activity_forgot_password">ForgotPassword</string>
+    <string name="button_unlock">Unlock</string>
+    <string name="button_lock">Lock</string>
+    <string name="button_reset">Reset password</string>
+    <string name="title_activity_reset_password">ResetPassword</string>
+    <string name="button_complete_reset">Reset</string>
+
+</resources>
