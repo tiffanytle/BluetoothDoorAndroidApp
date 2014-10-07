@@ -1,21 +1,31 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal" >
+    android:gravity="center"
+    android:orientation="vertical"
+    android:background="@drawable/appbackground">
 
     <Button
         android:id="@+id/loginBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="200dp"
+        android:layout_height="75dp"
         android:text="@string/button_login"
-        android:onClick="clickLogin "/>
+        android:textColor="@color/black"
+        android:onClick="clickLogin"
+        android:textSize="40sp"
+        android:background="@drawable/roundbutton" />
 
     <Button
         android:id="@+id/createNewUserBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="50dp"
+        android:layout_width="200dp"
+        android:layout_height="75dp"
         android:text="@string/button_newUser"
-        android:onClick="clickNewUser" />
+        android:textColor="@color/black"
+        android:onClick="clickNewUser"
+        android:textSize="25sp"
+        android:background="@drawable/roundbutton"/>
 
 </LinearLayout>

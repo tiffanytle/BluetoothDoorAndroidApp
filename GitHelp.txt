@@ -1,0 +1,22 @@
+Git Help
+
+TO ADD FILES
+= git add [...] --> add file
+= git add -A --> add all files into directory
+= git add -u --> adds changes to files that already exist in respository
+= git add path/to/file.extention --> add specific files
+
+TO REMOVE FILES
+= git rm [...] --> remove file
+
+TO COMMIT FILES
+= git commit -m "Useful but short message" --> after any add/rm files, use this command
+
+TO GET STATUS
+= git status --> recap files that have been changed in repository
+
+TO PUSH FILES
+= git push orgin master --> updates the repository with your files
+
+TO PULL FILES
+= git pull orgin master --> updates your files with files in respository
