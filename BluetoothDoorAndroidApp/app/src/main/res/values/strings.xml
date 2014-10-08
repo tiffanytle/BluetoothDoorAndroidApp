@@ -9,7 +9,7 @@
     <string name="title_activity_prompt_password">PromptPassword</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_create_new_user">CreateNewUser</string>
-    <string name="create_user">You are creating a new user!</string>
+    <string name="create_user">Username</string>
     <string name="forgot_password">I forgot my password</string>
     <string name="title_activity_main_menu">MainMenu</string>
     <string name="title_activity_forgot_password">ForgotPassword</string>

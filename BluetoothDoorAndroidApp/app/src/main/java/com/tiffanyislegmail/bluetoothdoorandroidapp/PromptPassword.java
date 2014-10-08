@@ -11,7 +11,7 @@ import android.widget.TextView;
 public class PromptPassword extends Activity implements View.OnClickListener {
 
     String userEntry = "";
-    String pinValue = "1111";
+    String pinValue = "";
     String failMsg = "Login failed. Please try again.";
 
     boolean correctPassword = false;
@@ -23,6 +23,8 @@ public class PromptPassword extends Activity implements View.OnClickListener {
     Button button0, button1, button2, button3, button4,
             button5, button6, button7, button8, button9,
             buttonLogin, buttonClear;
+
+    CreateNewUser getPin = new CreateNewUser();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +98,7 @@ public class PromptPassword extends Activity implements View.OnClickListener {
                             break;
                         case 3:
                             pinBox3.setText(pressedButton.getText().toString());
+                            pinValue = getPin.getPinValue();
                             if (userEntry.equals(pinValue))
                                 correctPassword = true;
                     }
@@ -114,7 +117,6 @@ public class PromptPassword extends Activity implements View.OnClickListener {
             correctPassword = false;
         }
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
