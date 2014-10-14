@@ -171,4 +171,9 @@ public class CreateNewUser extends Activity implements View.OnClickListener {
         return this.userExist;
     }
 
+    public void onStop() {
+        super.onStop();
+        saveData();
+    }
+
 } // end CreateNewUser class

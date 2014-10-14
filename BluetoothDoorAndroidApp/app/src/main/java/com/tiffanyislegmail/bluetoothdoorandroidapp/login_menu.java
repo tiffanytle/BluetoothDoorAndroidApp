@@ -26,6 +26,8 @@ public class login_menu extends Activity implements OnClickListener{
     CreateNewUser getUser = new CreateNewUser();
     SharedPreferences sharedPreferences;
 
+    CreateNewUser callCreate = new CreateNewUser();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,5 +86,10 @@ public class login_menu extends Activity implements OnClickListener{
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onStop() {
+        super.onStop();
+        callCreate.saveData();
     }
 }

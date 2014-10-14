@@ -28,7 +28,7 @@ public class PromptPassword extends Activity implements View.OnClickListener {
             button5, button6, button7, button8, button9,
             buttonLogin, buttonClear;
 
-    CreateNewUser getPin = new CreateNewUser();
+    CreateNewUser callCreate = new CreateNewUser();
 
     SharedPreferences sharedPreferences;
 
@@ -137,5 +137,10 @@ public class PromptPassword extends Activity implements View.OnClickListener {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onStop() {
+        super.onStop();
+        callCreate.saveData();
     }
 }
