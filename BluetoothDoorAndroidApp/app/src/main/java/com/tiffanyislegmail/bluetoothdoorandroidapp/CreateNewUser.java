@@ -153,6 +153,7 @@ public class CreateNewUser extends Activity implements View.OnClickListener {
         this.pinValue = userEntry;
         this.userExist = true;
         SharedPreferences.Editor pinSaver = sharedPreferences.edit();
+        pinSaver.clear();
         pinSaver.putString("userName",this.userName);
         pinSaver.putString("pinValue",this.pinValue);
         pinSaver.putBoolean("userExist",this.userExist);
@@ -171,11 +172,6 @@ public class CreateNewUser extends Activity implements View.OnClickListener {
         return this.userExist;
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        saveData();
-    }
     @Override
     protected void onDestroy() {
         super.onDestroy();

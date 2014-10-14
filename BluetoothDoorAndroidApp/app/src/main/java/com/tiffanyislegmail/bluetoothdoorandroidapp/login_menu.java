@@ -89,12 +89,6 @@ public class login_menu extends Activity implements OnClickListener{
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
-        callCreate.saveData();
-    }
-
-    @Override
     protected void onDestroy() {
         super.onDestroy();
         callCreate.saveData();

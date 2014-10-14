@@ -140,12 +140,6 @@ public class PromptPassword extends Activity implements View.OnClickListener {
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
-        callCreate.saveData();
-    }
-
-    @Override
     protected void onDestroy() {
         super.onDestroy();
         callCreate.saveData();
