@@ -139,7 +139,17 @@ public class PromptPassword extends Activity implements View.OnClickListener {
         return super.onOptionsItemSelected(item);
     }
 
-    public void onStop() {
+    protected void onStop() {
+        super.onStop();
+        callCreate.saveData();
+    }
+
+    protected void onDestroy() {
+        super.onStop();
+        callCreate.saveData();
+    }
+
+    protected void onPause() {
         super.onStop();
         callCreate.saveData();
     }

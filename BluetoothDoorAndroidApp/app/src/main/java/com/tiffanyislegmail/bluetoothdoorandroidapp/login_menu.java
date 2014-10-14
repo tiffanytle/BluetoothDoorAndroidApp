@@ -88,7 +88,17 @@ public class login_menu extends Activity implements OnClickListener{
         return super.onOptionsItemSelected(item);
     }
 
-    public void onStop() {
+    protected void onStop() {
+        super.onStop();
+        callCreate.saveData();
+    }
+
+    protected void onDestroy() {
+        super.onStop();
+        callCreate.saveData();
+    }
+
+    protected void onPause() {
         super.onStop();
         callCreate.saveData();
     }
