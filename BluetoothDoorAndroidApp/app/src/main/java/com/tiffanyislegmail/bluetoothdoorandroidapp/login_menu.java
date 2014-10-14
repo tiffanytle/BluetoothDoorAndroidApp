@@ -1,6 +1,7 @@
 package com.tiffanyislegmail.bluetoothdoorandroidapp;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+import android.content.SharedPreferences;
 
 
 public class login_menu extends Activity implements OnClickListener{
@@ -18,8 +20,11 @@ public class login_menu extends Activity implements OnClickListener{
     String failedLoginMsg = "Please create a new user.";
     String failedCreateMsg = "User exists. Please login.";
 
+    public static final String MyPREFERENCES = "MyPrefs";
+
     TextView failedLogin;
     CreateNewUser getUser = new CreateNewUser();
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +40,10 @@ public class login_menu extends Activity implements OnClickListener{
         LoginBtn.setOnClickListener(this);
         createNewUserBtn.setOnClickListener(this);
 
-        userName = getUser.getUserName();
-        userNameBox.setText(userName);
+        sharedPreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+
+        userExist = sharedPreferences.getBoolean("userExist",false);
+        userName = sharedPreferences.getString("userName",null);
     }
 
     public void onClick (View v) {

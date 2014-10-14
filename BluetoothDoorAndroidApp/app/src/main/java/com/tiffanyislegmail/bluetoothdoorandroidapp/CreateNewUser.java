@@ -1,6 +1,7 @@
 package com.tiffanyislegmail.bluetoothdoorandroidapp;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.content.SharedPreferences;
 
 
 public class CreateNewUser extends Activity implements View.OnClickListener {
@@ -15,6 +17,7 @@ public class CreateNewUser extends Activity implements View.OnClickListener {
     private static String pinValue = "";
     private static String userName = "";
     private static boolean userExist;
+    public static final String MyPREFERENCES = "MyPrefs";
 
     String userEntry = "";
     String failPin = "Invalid pin. Please try again.";
@@ -31,6 +34,8 @@ public class CreateNewUser extends Activity implements View.OnClickListener {
     Button button0, button1, button2, button3, button4,
             button5, button6, button7, button8, button9,
             buttonCreate, buttonClear;
+
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +76,8 @@ public class CreateNewUser extends Activity implements View.OnClickListener {
         buttonClear.setOnClickListener(this);
         buttonCreate.setOnClickListener(this);
 
+        sharedPreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+
         userExist = false;
     }
 
@@ -95,9 +102,7 @@ public class CreateNewUser extends Activity implements View.OnClickListener {
             case R.id.buttonCreate:
                 if (readyPin == true & (userVal.getText().toString().length() > 0)) {
                     Intent intent = new Intent(v.getContext(), login_menu.class);
-                    this.userName = userVal.getText().toString();
-                    this.pinValue = userEntry;
-                    this.userExist = true;
+                    saveData();
                     clearData();
                     startActivity(intent);
                 } else if (userVal.getText().toString().length() == 0) {
@@ -142,6 +147,17 @@ public class CreateNewUser extends Activity implements View.OnClickListener {
             readyPin = false;
         }
     } // end clearData method
+
+    public void saveData() {
+        this.userName = userVal.getText().toString();
+        this.pinValue = userEntry;
+        this.userExist = true;
+        SharedPreferences.Editor pinSaver = sharedPreferences.edit();
+        pinSaver.putString("userName",this.userName);
+        pinSaver.putString("pinValue",this.pinValue);
+        pinSaver.putBoolean("userExist",this.userExist);
+        pinSaver.commit();
+    }
 
     public String getPinValue () {
         return this.pinValue;

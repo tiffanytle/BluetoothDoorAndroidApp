@@ -1,7 +1,9 @@
 package com.tiffanyislegmail.bluetoothdoorandroidapp;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +18,8 @@ public class PromptPassword extends Activity implements View.OnClickListener {
 
     boolean correctPassword = false;
 
+    public static final String MyPREFERENCES = "MyPrefs";
+
     final int PIN_LENGTH = 4;
 
     TextView pinBox0, pinBox1, pinBox2, pinBox3, failedPassword;
@@ -25,6 +29,8 @@ public class PromptPassword extends Activity implements View.OnClickListener {
             buttonLogin, buttonClear;
 
     CreateNewUser getPin = new CreateNewUser();
+
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +69,10 @@ public class PromptPassword extends Activity implements View.OnClickListener {
         buttonClear.setOnClickListener(this);
         buttonLogin.setOnClickListener(this);
 
+        sharedPreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+
+        pinValue = sharedPreferences.getString("pinValue",null);
+
     }
 
     public void onClick (View v) {
@@ -98,7 +108,6 @@ public class PromptPassword extends Activity implements View.OnClickListener {
                             break;
                         case 3:
                             pinBox3.setText(pressedButton.getText().toString());
-                            pinValue = getPin.getPinValue();
                             if (userEntry.equals(pinValue))
                                 correctPassword = true;
                     }
