@@ -171,18 +171,19 @@ public class CreateNewUser extends Activity implements View.OnClickListener {
         return this.userExist;
     }
 
+    @Override
     protected void onStop() {
         super.onStop();
         saveData();
     }
-
+    @Override
     protected void onDestroy() {
-        super.onStop();
+        super.onDestroy();
         saveData();
     }
-
+    @Override
     protected void onPause() {
-        super.onStop();
+        super.onPause();
         saveData();
     }
 
