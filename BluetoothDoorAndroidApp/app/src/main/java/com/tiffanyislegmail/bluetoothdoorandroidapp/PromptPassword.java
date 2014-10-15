@@ -138,7 +138,7 @@ public class PromptPassword extends Activity implements View.OnClickListener {
         }
         return super.onOptionsItemSelected(item);
     }
-
+    /*
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -149,5 +149,5 @@ public class PromptPassword extends Activity implements View.OnClickListener {
     protected void onPause() {
         super.onPause();
         callCreate.saveData();
-    }
+    } */
 }

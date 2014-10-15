@@ -87,7 +87,7 @@ public class login_menu extends Activity implements OnClickListener{
         }
         return super.onOptionsItemSelected(item);
     }
-
+/*
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -98,5 +98,5 @@ public class login_menu extends Activity implements OnClickListener{
     protected void onPause() {
         super.onPause();
         callCreate.saveData();
-    }
+    } */
 }

@@ -149,14 +149,14 @@ public class CreateNewUser extends Activity implements View.OnClickListener {
     } // end clearData method
 
     public void saveData() {
-        this.userName = userVal.getText().toString();
+        /*this.userName = userVal.getText().toString();
         this.pinValue = userEntry;
-        this.userExist = true;
+        this.userExist = true; */
         SharedPreferences.Editor pinSaver = sharedPreferences.edit();
         pinSaver.clear();
-        pinSaver.putString("userName",this.userName);
-        pinSaver.putString("pinValue",this.pinValue);
-        pinSaver.putBoolean("userExist",this.userExist);
+        pinSaver.putString("userName",userVal.getText().toString());
+        pinSaver.putString("pinValue",userEntry);
+        pinSaver.putBoolean("userExist",true);
         pinSaver.commit();
     }
 
@@ -171,16 +171,17 @@ public class CreateNewUser extends Activity implements View.OnClickListener {
     public boolean getUserExist() {
         return this.userExist;
     }
-
+    /*
     @Override
     protected void onDestroy() {
         super.onDestroy();
         saveData();
     }
+
     @Override
     protected void onPause() {
         super.onPause();
         saveData();
-    }
+    } */
 
 } // end CreateNewUser class
