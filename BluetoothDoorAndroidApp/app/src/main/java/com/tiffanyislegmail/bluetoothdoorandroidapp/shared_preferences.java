@@ -12,6 +12,7 @@ public class shared_preferences extends Activity {
     public static final String PREF_NAME = "DOOR_PREF";
     public static final String USER_EXIST = "User_Exists";
     public static final String USER_PIN = "User_Pin_Val";
+    public static final String USER_NAME = "User_Name";
 
     public shared_preferences() {
         super();
@@ -26,24 +27,29 @@ public class shared_preferences extends Activity {
 
         editor.clear();
         editor.commit();
-        editor.putString("userName",userName);
+        editor.putString(USER_NAME,userName);
         editor.putString(USER_PIN,pinValue);
         editor.putBoolean(USER_EXIST,true);
         editor.commit();
         }
     public boolean getUserExist(Context context) {
-        SharedPreferences settings;
         boolean exist;
-        settings = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences settings = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         exist = settings.getBoolean(USER_EXIST,false);
         return exist;
     }
 
     public String getPinValue(Context context) {
-        SharedPreferences settings;
         String pin = null;
-        settings = context.getSharedPreferences(PREF_NAME,Context.MODE_PRIVATE);
+        SharedPreferences settings = context.getSharedPreferences(PREF_NAME,Context.MODE_PRIVATE);
         pin = settings.getString(USER_PIN,null);
         return pin;
+    }
+
+    public String getUserName(Context context) {
+        String name = null;
+        SharedPreferences settings = context.getSharedPreferences(PREF_NAME,Context.MODE_PRIVATE);
+        name = settings.getString(USER_NAME,null);
+        return name;
     }
 }

@@ -60,6 +60,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.tiffanyislegmail.bluetoothdoorandroidapp.MainMenu" />
         </activity>
+        <activity
+            android:name=".SecurityQuestions"
+            android:label="@string/title_activity_security_questions"
+            android:parentActivityName=".CreateNewUser" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.tiffanyislegmail.bluetoothdoorandroidapp.CreateNewUser" />
+        </activity>
     </application>
 
 </manifest>

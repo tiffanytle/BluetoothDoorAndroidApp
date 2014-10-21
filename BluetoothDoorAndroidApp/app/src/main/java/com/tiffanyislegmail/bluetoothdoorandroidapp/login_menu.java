@@ -19,6 +19,7 @@ public class login_menu extends Activity implements OnClickListener{
     String failedCreateMsg = "User exists. Please login.";
 
     TextView failedLogin;
+    TextView userNameBox;
 
     Activity context = this;
 
@@ -32,16 +33,16 @@ public class login_menu extends Activity implements OnClickListener{
 
         Button LoginBtn = (Button) findViewById(R.id.loginBtn);
         Button createNewUserBtn = (Button) findViewById(R.id.createNewUserBtn);
-        //TextView userNameBox = (TextView) findViewById(R.id.displayUserName);
+        userNameBox = (TextView) findViewById(R.id.displayUserName);
         failedLogin = (TextView) findViewById(R.id.failedLogin);
 
         // Initializing buttons on login menu
         LoginBtn.setOnClickListener(this);
         createNewUserBtn.setOnClickListener(this);
 
-        // Calling saved values
-
-
+        // Retreiving user name
+        userName = sharedPrefs.getUserName(context);
+        userNameBox.setText(userName);
     }
 
     public void onClick (View v) {
