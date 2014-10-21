@@ -3,13 +3,13 @@ package com.tiffanyislegmail.bluetoothdoorandroidapp;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.content.SharedPreferences;
 
 
 public class CreateNewUser extends Activity implements View.OnClickListener {
@@ -17,7 +17,10 @@ public class CreateNewUser extends Activity implements View.OnClickListener {
     private static String pinValue = "";
     private static String userName = "";
     private static boolean userExist;
-    public static final String MyPREFERENCES = "MyPrefs";
+
+    // SharedPreferences
+    private shared_preferences sharedPrefs = new shared_preferences();
+    Activity context = this;
 
     String userEntry = "";
     String failPin = "Invalid pin. Please try again.";
@@ -34,8 +37,6 @@ public class CreateNewUser extends Activity implements View.OnClickListener {
     Button button0, button1, button2, button3, button4,
             button5, button6, button7, button8, button9,
             buttonCreate, buttonClear;
-
-    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,9 +77,8 @@ public class CreateNewUser extends Activity implements View.OnClickListener {
         buttonClear.setOnClickListener(this);
         buttonCreate.setOnClickListener(this);
 
-        sharedPreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-
         userExist = false;
+
     }
 
     @Override
@@ -102,7 +102,7 @@ public class CreateNewUser extends Activity implements View.OnClickListener {
             case R.id.buttonCreate:
                 if (readyPin == true & (userVal.getText().toString().length() > 0)) {
                     Intent intent = new Intent(v.getContext(), login_menu.class);
-                    saveData();
+                    sharedPrefs.saveData(context,userVal.getText().toString(),userEntry);
                     clearData();
                     startActivity(intent);
                 } else if (userVal.getText().toString().length() == 0) {
@@ -147,29 +147,35 @@ public class CreateNewUser extends Activity implements View.OnClickListener {
             readyPin = false;
         }
     } // end clearData method
-
+/*
     public void saveData() {
-        /*this.userName = userVal.getText().toString();
-        this.pinValue = userEntry;
-        this.userExist = true; */
-        SharedPreferences.Editor pinSaver = sharedPreferences.edit();
-        pinSaver.clear();
-        pinSaver.putString("userName",userVal.getText().toString());
-        pinSaver.putString("pinValue",userEntry);
-        pinSaver.putBoolean("userExist",true);
-        pinSaver.commit();
-    }
-
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.clear();
+        editor.commit();
+        editor.putString("userName", userVal.getText().toString());
+        editor.putString("pinValue",userEntry);
+        editor.putBoolean("userExist", true);
+        editor.commit();
+    } */
+/*
     public String getPinValue () {
-        return this.pinValue;
+        SharedPreferences dataFile = getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
+        String getPinValue = dataFile.getString("pinValue",null);
+        return getPinValue;
     }
 
     public String getUserName () {
-        return this.userName;
+        SharedPreferences dataFile = getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
+        String getUserName = dataFile.getString("userName",null);
+        return getUserName;
     }
-
+    */
     public boolean getUserExist() {
-        return this.userExist;
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        boolean answer = sharedPref.getBoolean("userExist", false);
+        return answer;
+
     }
     /*
     @Override

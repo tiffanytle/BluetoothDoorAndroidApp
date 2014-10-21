@@ -1,7 +1,6 @@
 package com.tiffanyislegmail.bluetoothdoorandroidapp;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -10,7 +9,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
-import android.content.SharedPreferences;
 
 
 public class login_menu extends Activity implements OnClickListener{
@@ -20,13 +18,12 @@ public class login_menu extends Activity implements OnClickListener{
     String failedLoginMsg = "Please create a new user.";
     String failedCreateMsg = "User exists. Please login.";
 
-    public static final String MyPREFERENCES = "MyPrefs";
-
     TextView failedLogin;
-    CreateNewUser getUser = new CreateNewUser();
-    SharedPreferences sharedPreferences;
 
-    CreateNewUser callCreate = new CreateNewUser();
+    Activity context = this;
+
+    // SharedPreferences
+    private shared_preferences sharedPrefs = new shared_preferences();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,22 +32,21 @@ public class login_menu extends Activity implements OnClickListener{
 
         Button LoginBtn = (Button) findViewById(R.id.loginBtn);
         Button createNewUserBtn = (Button) findViewById(R.id.createNewUserBtn);
-        TextView userNameBox = (TextView) findViewById(R.id.displayUserName);
+        //TextView userNameBox = (TextView) findViewById(R.id.displayUserName);
         failedLogin = (TextView) findViewById(R.id.failedLogin);
 
         // Initializing buttons on login menu
         LoginBtn.setOnClickListener(this);
         createNewUserBtn.setOnClickListener(this);
 
-        sharedPreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+        // Calling saved values
 
-        userExist = sharedPreferences.getBoolean("userExist",false);
-        userName = sharedPreferences.getString("userName",null);
+
     }
 
     public void onClick (View v) {
         failedLogin.setText("");
-        userExist = getUser.getUserExist();
+        userExist = sharedPrefs.getUserExist(context);
         switch (v.getId()) {
             case R.id.loginBtn:
                 if (userExist) {
