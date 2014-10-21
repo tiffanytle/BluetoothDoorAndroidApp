@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class ForgotPassword extends Activity implements View.OnClickListener {
@@ -16,7 +17,8 @@ public class ForgotPassword extends Activity implements View.OnClickListener {
     TextView failedRetrieve;
     Button buttonReset;
 
-    String failMsg = "Incorrect answers.";
+    String failMsg = "Incorrect answers. Attempts left: ";
+    int counter = 3;
 
     boolean correctAnswer = false;
 
@@ -62,6 +64,17 @@ public class ForgotPassword extends Activity implements View.OnClickListener {
             sharedPrefs.clearSavedPrefs(context);
             clearData();
             startActivity(intent);
+        }
+        else {
+            counter --;
+            if (counter == 0) {
+                sharedPrefs.lockApplication(context);
+                Toast.makeText(context, "Application locked. Redirecting...", Toast.LENGTH_SHORT).show();
+                clearData();
+                Intent intent1 = new Intent(v.getContext(), login_menu.class);
+                startActivity(intent1);
+            } else
+                failedRetrieve.setText(failMsg + counter);
         }
     }
 

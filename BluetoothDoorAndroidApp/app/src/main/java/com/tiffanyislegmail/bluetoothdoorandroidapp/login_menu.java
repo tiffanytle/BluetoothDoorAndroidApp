@@ -13,10 +13,13 @@ import android.widget.TextView;
 
 public class login_menu extends Activity implements OnClickListener{
 
-    boolean userExist = false;
+    boolean userExist = false, isAppUnlocked = true;
     String userName = "";
     String failedLoginMsg = "Please create a new user.";
     String failedCreateMsg = "User exists. Please login.";
+    String failedLockedMsg = "You are locked out.";
+
+    Button LoginBtn, createNewUserBtn, forgotPassword;
 
     TextView failedLogin;
     TextView userNameBox;
@@ -31,9 +34,9 @@ public class login_menu extends Activity implements OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_menu);
 
-        Button LoginBtn = (Button) findViewById(R.id.loginBtn);
-        Button createNewUserBtn = (Button) findViewById(R.id.createNewUserBtn);
-        Button forgotPassword = (Button) findViewById(R.id.forgotPassword);
+        LoginBtn = (Button) findViewById(R.id.loginBtn);
+        createNewUserBtn = (Button) findViewById(R.id.createNewUserBtn);
+        forgotPassword = (Button) findViewById(R.id.forgotPassword);
 
         userNameBox = (TextView) findViewById(R.id.displayUserName);
         failedLogin = (TextView) findViewById(R.id.failedLogin);
@@ -46,32 +49,49 @@ public class login_menu extends Activity implements OnClickListener{
         // Retrieving user name
         userName = sharedPrefs.getUserName(context);
         userNameBox.setText(userName);
+
     }
 
     public void onClick (View v) {
-        failedLogin.setText("");
-        userExist = sharedPrefs.getUserExist(context);
-        switch (v.getId()) {
-            case R.id.loginBtn:
-                if (userExist) {
-                    Intent intent = new Intent(v.getContext(), PromptPassword.class);
-                    startActivity(intent);
-                } else
-                    failedLogin.setText(failedLoginMsg);
-                break;
-            case R.id.createNewUserBtn:
-                if (!userExist) {
-                    Intent intent1 = new Intent(v.getContext(), CreateNewUser.class);
-                    startActivity(intent1);
-                } else
-                    failedLogin.setText(failedCreateMsg);
-                break;
-            case R.id.forgotPassword:
-                Intent intent2 = new Intent(v.getContext(), ForgotPassword.class);
-                startActivity(intent2);
-                break;
+        if (checkAppLocked() == true) {
+            failedLogin.setText("");
+            userExist = sharedPrefs.getUserExist(context);
+            switch (v.getId()) {
+                case R.id.loginBtn:
+                    if (userExist) {
+                        Intent intent = new Intent(v.getContext(), PromptPassword.class);
+                        startActivity(intent);
+                    } else
+                        failedLogin.setText(failedLoginMsg);
+                    break;
+                case R.id.createNewUserBtn:
+                    if (!userExist) {
+                        Intent intent1 = new Intent(v.getContext(), CreateNewUser.class);
+                        startActivity(intent1);
+                    } else
+                        failedLogin.setText(failedCreateMsg);
+                    break;
+                case R.id.forgotPassword:
+                    if (userExist) {
+                        Intent intent2 = new Intent(v.getContext(), ForgotPassword.class);
+                        startActivity(intent2);
+                        break;
+                    } else
+                        failedLogin.setText(failedLoginMsg);
+            }
         }
+        else
+            failedLogin.setText(failedLockedMsg);
     }
+
+    public boolean checkAppLocked() {
+        boolean notLocked = false;
+        isAppUnlocked = sharedPrefs.lockApplicationCheck(context);
+        if (isAppUnlocked)
+            notLocked = true;
+        return notLocked;
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
