@@ -17,6 +17,12 @@
         android:text="@string/button_unlock" />
 
     <Button
+        android:id="@+id/bluetooth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/button_bluetooth" />
+
+    <Button
         android:id="@+id/resetPasswordBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

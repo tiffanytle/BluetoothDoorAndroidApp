@@ -17,12 +17,22 @@ public class MainMenu extends Activity implements View.OnClickListener {
         setContentView(R.layout.activity_main_menu);
 
         Button clickResetPassword = (Button) findViewById(R.id.resetPasswordBtn);
+        Button clickBluetooth = (Button) findViewById(R.id.bluetooth);
         clickResetPassword.setOnClickListener(this);
+        clickBluetooth.setOnClickListener(this);
     }
 
     public void onClick(View v) {
-        Intent intent_reset = new Intent (v.getContext(),ResetPassword.class);
-        startActivity(intent_reset);
+        switch (v.getId()) {
+            case R.id.resetPasswordBtn:
+                Intent intent_reset = new Intent(v.getContext(), ResetPassword.class);
+                startActivity(intent_reset);
+                break;
+            case R.id.bluetooth:
+                Intent intent1 = new Intent(v.getContext(), bluetooth.class);
+                startActivity(intent1);
+                break;
+        }
     }
 
     @Override
