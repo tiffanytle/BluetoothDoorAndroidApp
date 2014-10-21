@@ -19,5 +19,6 @@
     <string name="title_activity_reset_password">ResetPassword</string>
     <string name="button_complete_reset">Reset</string>
     <string name="title_activity_security_questions">SecurityQuestions</string>
+    <string name="security_title">Security Questions</string>
 
 </resources>

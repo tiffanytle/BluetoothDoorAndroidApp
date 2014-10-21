@@ -33,14 +33,17 @@ public class login_menu extends Activity implements OnClickListener{
 
         Button LoginBtn = (Button) findViewById(R.id.loginBtn);
         Button createNewUserBtn = (Button) findViewById(R.id.createNewUserBtn);
+        Button forgotPassword = (Button) findViewById(R.id.forgotPassword);
+
         userNameBox = (TextView) findViewById(R.id.displayUserName);
         failedLogin = (TextView) findViewById(R.id.failedLogin);
 
         // Initializing buttons on login menu
         LoginBtn.setOnClickListener(this);
         createNewUserBtn.setOnClickListener(this);
+        forgotPassword.setOnClickListener(this);
 
-        // Retreiving user name
+        // Retrieving user name
         userName = sharedPrefs.getUserName(context);
         userNameBox.setText(userName);
     }
@@ -62,6 +65,10 @@ public class login_menu extends Activity implements OnClickListener{
                     startActivity(intent1);
                 } else
                     failedLogin.setText(failedCreateMsg);
+                break;
+            case R.id.forgotPassword:
+                Intent intent2 = new Intent(v.getContext(), ForgotPassword.class);
+                startActivity(intent2);
                 break;
         }
     }

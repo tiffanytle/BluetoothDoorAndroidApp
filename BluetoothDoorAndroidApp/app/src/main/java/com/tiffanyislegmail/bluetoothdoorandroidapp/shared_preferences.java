@@ -13,6 +13,9 @@ public class shared_preferences extends Activity {
     public static final String USER_EXIST = "User_Exists";
     public static final String USER_PIN = "User_Pin_Val";
     public static final String USER_NAME = "User_Name";
+    public static final String VACATION = "Security_Vacation";
+    public static final String CAR_MODEL = "Security_CarModel";
+    public static final String CAR_MAKE = "Security_CarMake";
 
     public shared_preferences() {
         super();
@@ -32,6 +35,19 @@ public class shared_preferences extends Activity {
         editor.putBoolean(USER_EXIST,true);
         editor.commit();
         }
+
+    public void saveSecurity (Context context, String vacation, String make, String model) {
+        SharedPreferences settings;
+        SharedPreferences.Editor editor;
+
+        settings = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        editor = settings.edit();
+
+        editor.putString(VACATION,vacation);
+        editor.putString(CAR_MAKE,make);
+        editor.putString(CAR_MODEL,model);
+        editor.commit();
+    }
     public boolean getUserExist(Context context) {
         boolean exist;
         SharedPreferences settings = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
@@ -51,5 +67,33 @@ public class shared_preferences extends Activity {
         SharedPreferences settings = context.getSharedPreferences(PREF_NAME,Context.MODE_PRIVATE);
         name = settings.getString(USER_NAME,null);
         return name;
+    }
+
+    public String getSecurityVacation(Context context) {
+        String vacation = null;
+        SharedPreferences settings = context.getSharedPreferences(PREF_NAME,Context.MODE_PRIVATE);
+        vacation = settings.getString(VACATION,null);
+        return vacation;
+    }
+
+    public String getSecurityCarMake(Context context) {
+        String carMake = null;
+        SharedPreferences settings = context.getSharedPreferences(PREF_NAME,Context.MODE_PRIVATE);
+        carMake = settings.getString(CAR_MAKE,null);
+        return carMake;
+    }
+
+    public String getSecurityCarModel(Context context) {
+        String carModel = null;
+        SharedPreferences settings = context.getSharedPreferences(PREF_NAME,Context.MODE_PRIVATE);
+        carModel = settings.getString(CAR_MODEL,null);
+        return carModel;
+    }
+
+    public void clearSavedPrefs(Context context) {
+        SharedPreferences settings = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.clear();
+        editor.commit();
     }
 }

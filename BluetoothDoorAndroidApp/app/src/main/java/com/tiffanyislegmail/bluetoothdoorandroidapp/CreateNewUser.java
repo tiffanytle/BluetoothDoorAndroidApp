@@ -101,7 +101,7 @@ public class CreateNewUser extends Activity implements View.OnClickListener {
                 break;
             case R.id.buttonCreate:
                 if (readyPin == true & (userVal.getText().toString().length() > 0)) {
-                    Intent intent = new Intent(v.getContext(), login_menu.class);
+                    Intent intent = new Intent(v.getContext(), SecurityQuestions.class);
                     sharedPrefs.saveData(context,userVal.getText().toString(),userEntry);
                     clearData();
                     startActivity(intent);
