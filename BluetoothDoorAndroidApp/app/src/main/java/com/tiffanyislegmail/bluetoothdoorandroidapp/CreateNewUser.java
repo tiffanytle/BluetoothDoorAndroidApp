@@ -104,9 +104,6 @@ public class CreateNewUser extends Activity implements View.OnClickListener {
                     Intent intent = new Intent(v.getContext(), SecurityQuestions.class);
                     sharedPrefs.saveData(context,userVal.getText().toString(),userEntry);
                     clearData();
-                    startActivity(intent);Intent intent = new Intent(v.getContext(), SecurityQuestions.class);
-                    sharedPrefs.saveData(context,userVal.getText().toString(),userEntry);
-                    clearData();
                     startActivity(intent);
                 } else if (userVal.getText().toString().length() == 0) {
                     failedCreatePin.setText(failUser);

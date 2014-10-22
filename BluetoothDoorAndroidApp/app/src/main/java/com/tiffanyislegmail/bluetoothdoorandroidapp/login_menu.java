@@ -53,7 +53,6 @@ public class login_menu extends Activity implements OnClickListener{
     }
 
     public void onClick (View v) {
-        if (checkAppLocked() == true) {
             failedLogin.setText("");
             userExist = sharedPrefs.getUserExist(context);
             switch (v.getId()) {
@@ -79,9 +78,6 @@ public class login_menu extends Activity implements OnClickListener{
                     } else
                         failedLogin.setText(failedLoginMsg);
             }
-        }
-        else
-            failedLogin.setText(failedLockedMsg);
     }
 
     public boolean checkAppLocked() {
@@ -93,7 +89,6 @@ public class login_menu extends Activity implements OnClickListener{
     }
 
 
-    @Override
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
