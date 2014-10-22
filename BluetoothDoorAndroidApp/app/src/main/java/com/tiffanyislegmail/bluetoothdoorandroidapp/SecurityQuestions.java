@@ -78,6 +78,8 @@ public class SecurityQuestions extends Activity implements View.OnClickListener 
     public void clearData() {
         secQuestVacation.setText("");
         secQuestMakeCar.setText("");
+        secQuestMakeCar.setText("");
+        secQuestMakeCar.setText("");
         secQuestModelCar.setText("");
     }
 }

@@ -76,6 +76,7 @@ public class ForgotPassword extends Activity implements View.OnClickListener {
             } else
                 failedRetrieve.setText(failMsg + counter);
         }
+        }
     }
 
     public boolean compareAnswers() {
