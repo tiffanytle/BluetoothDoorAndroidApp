@@ -5,7 +5,7 @@
     android:padding="@dimen/activity_vertical_margin">
 
     <TextView
-        android:id="@+id/tv_status"
+        android:id="@+id/dev_status"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
