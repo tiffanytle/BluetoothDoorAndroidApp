@@ -29,4 +29,7 @@
     <string name="bluetooth_scan">Scan</string>
     <string name="title_activity_paired_devices">paired_devices</string>
     <string name="text_list_devices">Devices</string>
+    <string name="text_pair">Pair</string>
+    <string name="text_bluetooth_off">Bluetooth is Off</string>
+    <string name="text_bluetooth_on">Bluetooth is On</string>
 </resources>
