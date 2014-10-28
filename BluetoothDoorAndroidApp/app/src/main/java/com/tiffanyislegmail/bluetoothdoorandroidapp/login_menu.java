@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 public class login_menu extends Activity implements OnClickListener{
 
-    boolean userExist = false, isAppUnlocked = true;
+    boolean userExist = false, isAppLocked = false;
     String userName = "";
     String failedLoginMsg = "Please create a new user.";
     String failedCreateMsg = "User exists. Please login.";
@@ -53,7 +53,8 @@ public class login_menu extends Activity implements OnClickListener{
     }
 
     public void onClick (View v) {
-            failedLogin.setText("");
+        failedLogin.setText("");
+        if ((checkAppLocked()) == true) {
             userExist = sharedPrefs.getUserExist(context);
             switch (v.getId()) {
                 case R.id.loginBtn:
@@ -78,12 +79,15 @@ public class login_menu extends Activity implements OnClickListener{
                     } else
                         failedLogin.setText(failedLoginMsg);
             }
+        } else {
+            failedLogin.setText(failedLockedMsg);
+        }
     }
 
     public boolean checkAppLocked() {
         boolean notLocked = false;
-        isAppUnlocked = sharedPrefs.lockApplicationCheck(context);
-        if (isAppUnlocked)
+        isAppLocked = sharedPrefs.checkLockApp(context);
+        if (isAppLocked == false)
             notLocked = true;
         return notLocked;
     }

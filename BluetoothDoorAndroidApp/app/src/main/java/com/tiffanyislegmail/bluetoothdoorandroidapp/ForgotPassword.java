@@ -67,13 +67,14 @@ public class ForgotPassword extends Activity implements View.OnClickListener {
         }
         else {
             counter--;
-            failedRetrieve.setText(failMsg + counter);
             if (counter == 0) {
                 Toast.makeText(context,"No more attempts. Redirecting...",Toast.LENGTH_SHORT).show();
+                sharedPrefs.setLockApp(context);
                 Intent intent = new Intent(v.getContext(), login_menu.class);
                 clearData();
                 startActivity(intent);
             }
+            failedRetrieve.setText(failMsg + counter);
         }
 
     }

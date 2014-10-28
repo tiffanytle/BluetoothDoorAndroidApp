@@ -7,12 +7,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class PromptPassword extends Activity implements View.OnClickListener {
 
     String userEntry = "";
     String pinValue = "";
-    String failMsg = "Login failed. Please try again.";
+    String failMsg = "Incorrect pin. Attempts left: ";
+
+    int counter = 3;
 
     boolean correctPassword = false;
 
@@ -80,8 +83,15 @@ public class PromptPassword extends Activity implements View.OnClickListener {
                     startActivity(intent);
                 }
                 else {
-                    failedPassword.setText(failMsg);
                     clearData();
+                    counter--;
+                    if (counter == 0) {
+                        Toast.makeText(context, "No more attempts. Redirecting...", Toast.LENGTH_SHORT).show();
+                        sharedPrefs.setLockApp(context);
+                        Intent intent = new Intent(v.getContext(), login_menu.class);
+                        startActivity(intent);
+                    }
+                    failedPassword.setText(failMsg + counter);
                 }
                 break;
             default:

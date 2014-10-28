@@ -4,9 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import java.util.Calendar;
-import java.util.Date;
-
 /**
  * Created by Tiffany on 10/20/2014.
  */
@@ -103,35 +100,38 @@ public class shared_preferences extends Activity {
         editor.commit();
     }
 
-    public void lockApplication(Context context) {
-        Calendar cal = null;
-        Date lockDate = cal.getTime();
-        long dateVal = lockDate.getTime();
+    public void setLockApp(Context context) {
 
         SharedPreferences settings = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
-        editor.putLong(LOCK_DATE,dateVal);
+
+        long startLockTime = System.currentTimeMillis();
+
+        editor.putLong(LOCK_DATE,startLockTime);
         editor.putBoolean(IS_LOCKED,true);
         editor.commit();
     }
 
-    public boolean lockApplicationCheck (Context context) {
-        boolean lockCheck, unlockApp = true;
-        Calendar cal = null;
-        Date getCurrentDate = cal.getTime();
-        long retrieveDate, timeBetween = 0, fiveMins = 300000;
-
+    public boolean checkLockApp (Context context) {
+        boolean appLocked;
+        long compareLockTime, startLockTime, stopLockTime;
         SharedPreferences settings = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
-        lockCheck = settings.getBoolean(IS_LOCKED, false);
-
-        if (lockCheck == true) {
-            retrieveDate = settings.getLong(LOCK_DATE, 0);
-            timeBetween = getCurrentDate.getTime() - retrieveDate;
-            if (timeBetween > fiveMins)
-                unlockApp = true;
-            else
-                unlockApp = false;
+        appLocked = settings.getBoolean(IS_LOCKED,false);
+        if (appLocked == true) {
+            startLockTime = settings.getLong(LOCK_DATE,0);
+            stopLockTime = System.currentTimeMillis();
+            compareLockTime = stopLockTime - startLockTime;
+            // 300,000 milliseconds = 5 mins
+            if (compareLockTime > 300000) {
+                SharedPreferences.Editor editor = settings.edit();
+                editor.putBoolean(IS_LOCKED,false);
+                editor.putLong(LOCK_DATE,0);
+                editor.commit();
+                appLocked = false;
+            }
         }
-        return unlockApp;
+        return appLocked; // if false, then app is unlocked. if true, then app is locked
+
     }
+
 }
