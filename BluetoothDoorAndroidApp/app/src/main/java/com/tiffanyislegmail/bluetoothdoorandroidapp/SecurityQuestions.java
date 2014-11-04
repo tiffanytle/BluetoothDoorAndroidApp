@@ -59,7 +59,7 @@ public class SecurityQuestions extends Activity implements View.OnClickListener 
             sharedPrefs.saveSecurity(context,secQuestVacation.getText().toString(),
                     secQuestMakeCar.getText().toString(),secQuestModelCar.getText().toString() );
             clearData();
-            Intent intent = new Intent(v.getContext(), login_menu.class);
+            Intent intent = new Intent(v.getContext(), SplashScreen.class);
             startActivity(intent);
         }
         else

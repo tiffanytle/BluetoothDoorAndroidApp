@@ -18,10 +18,12 @@
     <color name="black">#000000</color>
     <color name="ivory">#FFFFF0</color>
     <color name="cadetBlue">#5F9EA0</color>
+    <color name="blandBlue">#6897bb</color>
     <color name="lightSkyBlue">#87CEFA</color>
     <color name="midnightBlue">#191970</color>
     <color name="darkCyan">#008B8B</color>
     <color name="moccasin">#FFE4B5</color>
+    <color name="clear">#00000000</color>
 
 
 </resources>

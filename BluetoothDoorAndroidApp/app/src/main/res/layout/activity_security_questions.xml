@@ -3,22 +3,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:gravity="center"
     tools:context="com.tiffanyislegmail.bluetoothdoorandroidapp.SecurityQuestions"
-    android:background="@drawable/appbackground">
+    android:background="@color/white">
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/btdoorlogo"
+        android:adjustViewBounds="true"
+        android:maxWidth="50dp"
+        android:maxHeight="50dp"
+        android:scaleType="fitCenter"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
         android:gravity="center"
-        android:textSize="20sp"
+        android:textSize="35sp"
+        android:textColor="@color/cadetBlue"
         android:text="@string/security_title"/>
-    <TextView
-        android:id="@+id/failedSecurity"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-        android:gravity="center"
-        android:textSize="20sp"
-        android:textColor="@color/red"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -26,16 +31,18 @@
         android:layout_marginRight="10sp"
         android:gravity="center"
         android:textSize="25sp"
-        android:text="Where was your first vacation?" />
+        android:text="Where was your first vacation?"
+        android:textColor="@color/gray"/>
     <EditText
         android:id="@+id/secQuest_vacation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
         android:layout_marginLeft="10sp"
         android:layout_marginRight="10sp"
         android:gravity="center"
         android:textSize="25sp"
-        android:textColor="@color/gray"/>
+        android:textColor="@color/black"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -43,7 +50,8 @@
         android:layout_marginRight="10sp"
         android:gravity="center"
         android:textSize="25sp"
-        android:text="What was the make/model of your first car?" />
+        android:text="What was the make/model of your first car?"
+        android:textColor="@color/gray"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -54,12 +62,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="25sp"
-            android:text="Make: "/>
+            android:text="Make: "
+            android:textColor="@color/gray"/>
         <EditText
             android:id="@+id/secQuest_makeCar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/gray"
+            android:textColor="@color/black"
             android:textSize="25sp" />
         </LinearLayout>
     <LinearLayout
@@ -72,13 +81,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="25sp"
-            android:text="Model: "/>
+            android:text="Model: "
+            android:textColor="@color/gray"/>
         <EditText
             android:id="@+id/secQuest_modelCar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="25dp"
-            android:textColor="@color/gray"
+            android:textColor="@color/black"
             android:textSize="25sp" />
     </LinearLayout>
     <LinearLayout
@@ -89,8 +99,10 @@
             android:id="@+id/buttonSave"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:padding="10dp"
             android:text="Save user preferences"
+            android:textColor="@color/gray"
             android:background="@drawable/roundbutton"/>
 
         </LinearLayout>

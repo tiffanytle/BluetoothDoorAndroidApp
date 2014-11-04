@@ -20,7 +20,7 @@
     <string name="button_complete_reset">Reset</string>
     <string name="title_activity_security_questions">SecurityQuestions</string>
     <string name="security_title">Security Questions</string>
-    //bluetooth strings    <string name="button_bluetooth">Bluetooth</string>
+    //bluetooth strings        <string name="button_bluetooth">Bluetooth</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_bluetooth">bluetooth</string>
     <string name="bluetooth_disable">Disable</string>
@@ -32,4 +32,7 @@
     <string name="text_pair">Pair</string>
     <string name="text_bluetooth_off">Bluetooth is Off</string>
     <string name="text_bluetooth_on">Bluetooth is On</string>
+    <string name="title_activity_splash_screen">SplashScreen</string>
+    <string name="splash_screen_title">the bluetooth door opener app</string>
+
 </resources>

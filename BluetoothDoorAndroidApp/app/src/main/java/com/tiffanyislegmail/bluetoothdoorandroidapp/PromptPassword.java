@@ -13,7 +13,7 @@ public class PromptPassword extends Activity implements View.OnClickListener {
 
     String userEntry = "";
     String pinValue = "";
-    String failMsg = "Incorrect pin. Attempts left: ";
+    String failMsg = "Incorrect PIN. Attempts left: ";
 
     int counter = 3;
 
@@ -25,7 +25,9 @@ public class PromptPassword extends Activity implements View.OnClickListener {
 
     final int PIN_LENGTH = 4;
 
-    TextView pinBox0, pinBox1, pinBox2, pinBox3, failedPassword;
+    TextView pinBox0, pinBox1, pinBox2, pinBox3, userNameBox;
+
+    String userName;
 
     Button button0, button1, button2, button3, button4,
             button5, button6, button7, button8, button9,
@@ -40,7 +42,7 @@ public class PromptPassword extends Activity implements View.OnClickListener {
         pinBox1 = (TextView) findViewById(R.id.pinBox1);
         pinBox2 = (TextView) findViewById(R.id.pinBox2);
         pinBox3 = (TextView) findViewById(R.id.pinBox3);
-        failedPassword = (TextView) findViewById(R.id.failedPassword);
+        userNameBox = (TextView) findViewById(R.id.displayUserName);
 
         button0 = (Button) findViewById(R.id.button0);
         button1 = (Button) findViewById(R.id.button1);
@@ -69,6 +71,10 @@ public class PromptPassword extends Activity implements View.OnClickListener {
         buttonLogin.setOnClickListener(this);
 
         pinValue = sharedPrefs.getPinValue(context);
+
+        // Retrieving user name
+        userName = sharedPrefs.getUserName(context);
+        userNameBox.setText(userName);
     }
 
     public void onClick (View v) {
@@ -91,11 +97,10 @@ public class PromptPassword extends Activity implements View.OnClickListener {
                         Intent intent = new Intent(v.getContext(), login_menu.class);
                         startActivity(intent);
                     }
-                    failedPassword.setText(failMsg + counter);
+                    Toast.makeText(context, failMsg + counter, Toast.LENGTH_SHORT).show();
                 }
                 break;
             default:
-                failedPassword.setText("");
                 Button pressedButton = (Button) v;
                 if (userEntry.length() < PIN_LENGTH) {
                     userEntry = userEntry + pressedButton.getText();
@@ -141,6 +146,11 @@ public class PromptPassword extends Activity implements View.OnClickListener {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onBackPressed() {
+    }
+    
     /*
     @Override
     protected void onDestroy() {
