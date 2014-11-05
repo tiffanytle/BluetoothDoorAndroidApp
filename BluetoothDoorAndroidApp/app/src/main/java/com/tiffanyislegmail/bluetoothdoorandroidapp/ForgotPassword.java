@@ -7,14 +7,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 
 public class ForgotPassword extends Activity implements View.OnClickListener {
 
     EditText answerVacation, answerMakeCar, answerModelCar;
-    TextView failedRetrieve;
     Button buttonReset;
 
     String failMsg = "Incorrect answers. Attempts left: ";
@@ -36,12 +34,9 @@ public class ForgotPassword extends Activity implements View.OnClickListener {
         answerMakeCar = (EditText) findViewById(R.id.answer_makeCar);
         answerModelCar = (EditText) findViewById(R.id.answer_modelCar);
 
-        failedRetrieve = (TextView) findViewById(R.id.failedRetrieve);
-
         buttonReset = (Button) findViewById(R.id.buttonTry);
         buttonReset.setOnClickListener(this);
 
-        failedRetrieve.setText("");
     }
 
     @Override
@@ -74,9 +69,9 @@ public class ForgotPassword extends Activity implements View.OnClickListener {
                 clearData();
                 startActivity(intent);
             }
-            failedRetrieve.setText(failMsg + counter);
-        }
+            Toast.makeText(context,failMsg + counter,Toast.LENGTH_SHORT).show();
 
+        }
     }
 
     public boolean compareAnswers() {
