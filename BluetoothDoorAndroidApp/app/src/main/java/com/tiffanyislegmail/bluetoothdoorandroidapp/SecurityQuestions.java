@@ -8,11 +8,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class SecurityQuestions extends Activity implements View.OnClickListener {
 
     EditText secQuestVacation, secQuestMakeCar, secQuestModelCar;
-    TextView failedSecurity;
     Button buttonSave;
 
     boolean secReady = false;
@@ -32,12 +32,8 @@ public class SecurityQuestions extends Activity implements View.OnClickListener 
         secQuestMakeCar = (EditText) findViewById(R.id.secQuest_makeCar);
         secQuestModelCar = (EditText) findViewById(R.id.secQuest_modelCar);
 
-        failedSecurity = (TextView) findViewById(R.id.failedSecurity);
-
         buttonSave = (Button) findViewById(R.id.buttonSave);
         buttonSave.setOnClickListener(this);
-
-        failedSecurity.setText("");
 
     }
     @Override
@@ -63,7 +59,7 @@ public class SecurityQuestions extends Activity implements View.OnClickListener 
             startActivity(intent);
         }
         else
-            failedSecurity.setText(failMsg);
+            Toast.makeText(context, failMsg, Toast.LENGTH_SHORT).show();
     }
 
     public boolean securityReady() {

@@ -20,7 +20,8 @@ public class DeviceListActivity extends Activity {
     private ListView mListView;
     private DeviceListAdapter mAdapter;
     private ArrayList<BluetoothDevice> mDeviceList;
-
+    public String devAddress;
+    public BluetoothDevice connectedDevice;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,8 +44,10 @@ public class DeviceListActivity extends Activity {
                     unpairDevice(device);
                 } else {
                     showToast("Pairing...");
-
+                   //Pair with selected device
                     pairDevice(device);
+                   //hold device for sending data
+                    connectedDevice = device;
                 }
             }
         });
