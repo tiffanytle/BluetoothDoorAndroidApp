@@ -31,7 +31,7 @@ public class PromptPassword extends Activity implements View.OnClickListener {
 
     Button button0, button1, button2, button3, button4,
             button5, button6, button7, button8, button9,
-            buttonLogin, buttonClear;
+            buttonLogin, buttonClear, buttonForget;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +56,7 @@ public class PromptPassword extends Activity implements View.OnClickListener {
         button9 = (Button) findViewById(R.id.button9);
         buttonClear = (Button) findViewById(R.id.buttonClear);
         buttonLogin = (Button) findViewById(R.id.buttonLogin);
+        buttonForget = (Button) findViewById(R.id.forgotPassword);
 
         button0.setOnClickListener(this);
         button1.setOnClickListener(this);
@@ -69,6 +70,8 @@ public class PromptPassword extends Activity implements View.OnClickListener {
         button9.setOnClickListener(this);
         buttonClear.setOnClickListener(this);
         buttonLogin.setOnClickListener(this);
+        buttonForget.setOnClickListener(this);
+
 
         pinValue = sharedPrefs.getPinValue(context);
 
@@ -83,22 +86,32 @@ public class PromptPassword extends Activity implements View.OnClickListener {
                 clearData();
                 break;
             case R.id.buttonLogin:
-                if (correctPassword == true) {
-                    Intent intent = new Intent(v.getContext(), MainMenu.class);
+                if (checkAppLocked() == true) {
+                    if (correctPassword == true) {
+                        Intent intent = new Intent(v.getContext(), MainMenu.class);
+                        clearData();
+                        startActivity(intent);
+                    } else {
+                        clearData();
+                        counter--;
+                        if (counter == 0) {
+                            Toast.makeText(context, "No more attempts. Redirecting...", Toast.LENGTH_SHORT).show();
+                            sharedPrefs.setLockApp(context);
+                            Intent intent = new Intent(v.getContext(), SplashScreen.class);
+                            startActivity(intent);
+                        }
+                        Toast.makeText(context, failMsg + counter, Toast.LENGTH_SHORT).show();
+                    }
+                } else
+                    Toast.makeText(context, "Sorry, you are locked out.", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.forgotPassword:
+                if (checkAppLocked() == true) {
+                    Intent intent = new Intent(v.getContext(), ForgotPassword.class);
                     clearData();
                     startActivity(intent);
-                }
-                else {
-                    clearData();
-                    counter--;
-                    if (counter == 0) {
-                        Toast.makeText(context, "No more attempts. Redirecting...", Toast.LENGTH_SHORT).show();
-                        sharedPrefs.setLockApp(context);
-                        Intent intent = new Intent(v.getContext(), login_menu.class);
-                        startActivity(intent);
-                    }
-                    Toast.makeText(context, failMsg + counter, Toast.LENGTH_SHORT).show();
-                }
+                } else
+                    Toast.makeText(context, "Sorry, you are locked out.", Toast.LENGTH_SHORT).show();
                 break;
             default:
                 Button pressedButton = (Button) v;
@@ -135,6 +148,14 @@ public class PromptPassword extends Activity implements View.OnClickListener {
         }
     }
 
+    public boolean checkAppLocked() {
+        boolean isAppLocked, notLocked = false;
+        isAppLocked = sharedPrefs.checkLockApp(context);
+        if (isAppLocked == false)
+            notLocked = true;
+        return notLocked;
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -150,7 +171,7 @@ public class PromptPassword extends Activity implements View.OnClickListener {
     @Override
     public void onBackPressed() {
     }
-    
+
     /*
     @Override
     protected void onDestroy() {

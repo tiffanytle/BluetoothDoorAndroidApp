@@ -7,7 +7,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class SecurityQuestions extends Activity implements View.OnClickListener {
@@ -34,6 +33,7 @@ public class SecurityQuestions extends Activity implements View.OnClickListener 
 
         buttonSave = (Button) findViewById(R.id.buttonSave);
         buttonSave.setOnClickListener(this);
+
 
     }
     @Override

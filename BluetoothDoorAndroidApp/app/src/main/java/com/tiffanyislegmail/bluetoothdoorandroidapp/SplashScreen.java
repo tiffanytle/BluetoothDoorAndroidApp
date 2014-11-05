@@ -9,7 +9,7 @@ import android.widget.Toast;
 
 public class SplashScreen extends Activity {
 
-    private final int SPLASH_DISPLAY_LENGTH = 5000;
+    private final int SPLASH_DISPLAY_LENGTH = 2500;
     private shared_preferences sharedPrefs = new shared_preferences();
     Activity context = this;
     boolean userExist = false, isAppLocked = false;
