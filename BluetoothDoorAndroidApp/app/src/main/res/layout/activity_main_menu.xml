@@ -2,30 +2,64 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
+    android:background="@color/white"
+    android:orientation="vertical"
     tools:context="com.tiffanyislegmail.bluetoothdoorandroidapp.MainMenu">
-
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/btdoorlogo"
+        android:adjustViewBounds="true"
+        android:maxWidth="50dp"
+        android:maxHeight="50dp"
+        android:scaleType="fitCenter"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dip"
+        android:gravity="center"
+        android:textColor="@color/gray"
+        android:textSize="25dip"
+        android:text="What would you like to do?"/>
     <Button
         android:id="@+id/lockDoorBtn"
-        android:layout_width="wrap_content"
+        android:layout_width="1in"
         android:layout_height="wrap_content"
+        android:layout_marginTop="40dip"
+        android:padding="10dip"
+        android:background="@drawable/roundbutton"
+        android:textColor="@color/gray"
         android:text="@string/button_lock" />
-
     <Button
         android:id="@+id/unlockDoorBtn"
-        android:layout_width="wrap_content"
+        android:layout_width="1in"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dip"
+        android:padding="10dip"
+        android:background="@drawable/roundbutton"
+        android:textColor="@color/gray"
         android:text="@string/button_unlock" />
 
     <Button
         android:id="@+id/bluetooth"
-        android:layout_width="wrap_content"
+        android:layout_width="1in"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dip"
+        android:padding="10dip"
+        android:background="@drawable/roundbutton"
+        android:textColor="@color/gray"
         android:text="@string/button_bluetooth" />
 
     <Button
         android:id="@+id/resetPasswordBtn"
-        android:layout_width="wrap_content"
+        android:layout_width="1in"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dip"
+        android:padding="10dip"
+        android:background="@drawable/roundbutton"
+        android:textColor="@color/gray"
         android:text="@string/button_reset"
         android:onClick="clickResetPassword"/>
 

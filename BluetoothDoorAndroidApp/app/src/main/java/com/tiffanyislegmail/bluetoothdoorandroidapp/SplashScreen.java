@@ -36,9 +36,11 @@ public class SplashScreen extends Activity {
                         startActivity(intent1);
                         SplashScreen.this.finish();
                     }
-                } else
+                } else {
                     Toast.makeText(context, "You are currently locked out. Please try again later."
                             , Toast.LENGTH_SHORT).show();
+                    System.exit(0);
+                }
             }
         }, SPLASH_DISPLAY_LENGTH);
     }

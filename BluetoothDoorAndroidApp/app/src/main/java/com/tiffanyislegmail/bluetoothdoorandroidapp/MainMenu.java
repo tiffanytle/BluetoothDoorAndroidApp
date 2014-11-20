@@ -146,7 +146,7 @@ public class MainMenu extends Activity implements View.OnClickListener {
                 break;
 
             case R.id.resetPasswordBtn:
-                Intent intent_reset = new Intent(v.getContext(), ResetPassword.class);
+                Intent intent_reset = new Intent(v.getContext(), CreateNewUser.class);
                 startActivity(intent_reset);
                 break;
             case R.id.bluetooth:
