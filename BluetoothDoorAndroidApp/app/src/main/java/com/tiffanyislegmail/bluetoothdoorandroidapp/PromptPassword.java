@@ -74,10 +74,6 @@ public class PromptPassword extends Activity implements View.OnClickListener {
 
 
         pinValue = sharedPrefs.getPinValue(context);
-
-        // Retrieving user name
-        userName = sharedPrefs.getUserName(context);
-        userNameBox.setText(userName);
     }
 
     public void onClick (View v) {
