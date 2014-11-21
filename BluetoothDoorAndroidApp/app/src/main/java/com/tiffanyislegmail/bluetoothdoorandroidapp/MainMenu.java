@@ -170,14 +170,8 @@ public class MainMenu extends Activity implements View.OnClickListener {
                 Toast.makeText(getApplicationContext(), "Device Paired", Toast.LENGTH_SHORT).show();
                 pairedSuccess = true;
             }
-<<<<<<< HEAD
-        } else { // Device is already paired
+        } else  // Device is already paired
             pairedSuccess = true;
-        }
-=======
-        } else
-            pairedSuccess = true;
->>>>>>> 70de73c6fe0dd6b62106dd17ae57b0ed2981eb69
         return pairedSuccess;
     }
 
