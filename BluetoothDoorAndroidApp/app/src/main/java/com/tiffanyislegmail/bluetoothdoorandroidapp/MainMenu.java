@@ -150,12 +150,13 @@ public class MainMenu extends Activity implements View.OnClickListener {
             long start = System.currentTimeMillis();
             long end = start + 10*1000; // 15 seconds * 1000 ms/sec
             while (System.currentTimeMillis() < end); //wait 10 seconds
-        }
+            Toast.makeText(getApplicationContext(), "Bluetooth is now enabled", Toast.LENGTH_SHORT).show();
+        } else
+            Toast.makeText(getApplicationContext(), "Bluetooth is already enabled", Toast.LENGTH_SHORT).show();
     }
 
     private boolean findAndPairDevice() {
-        boolean pairedSuccess = false;
-
+        boolean pairedSuccess;
         device = mBluetoothAdapter.getRemoteDevice(address);
         if (device.getBondState() != BluetoothDevice.BOND_BONDED) {
             pairDevice(device);
@@ -164,11 +165,13 @@ public class MainMenu extends Activity implements View.OnClickListener {
             while (System.currentTimeMillis() < end); //wait 15 seconds
             if (device.getBondState() != BluetoothDevice.BOND_BONDED) {
                 Toast.makeText(getApplicationContext(), "Device NOT Paired", Toast.LENGTH_SHORT).show();
-                pairedSuccess = true;
+                pairedSuccess = false;
             } else {
                 Toast.makeText(getApplicationContext(), "Device Paired", Toast.LENGTH_SHORT).show();
-                pairedSuccess = false;
+                pairedSuccess = true;
             }
+        } else { // Device is already paired
+            pairedSuccess = true;
         }
         return pairedSuccess;
     }
