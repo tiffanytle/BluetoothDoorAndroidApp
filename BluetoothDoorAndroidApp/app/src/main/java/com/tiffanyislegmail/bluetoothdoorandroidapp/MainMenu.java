@@ -26,7 +26,7 @@ public class MainMenu extends Activity implements View.OnClickListener {
     public DataOutputStream os;
 
     // Bluetooth addresses & info
-    public String address = "20:14:03:24:51:82"; //device address
+    public String address = "84:7A:88:FE:64:57";//"20:14:03:24:51:82"; //device address
     private static final UUID MY_UUID = UUID.fromString("0000110E-0000-1000-8000-00805F9B34FB");
     private BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
@@ -170,9 +170,14 @@ public class MainMenu extends Activity implements View.OnClickListener {
                 Toast.makeText(getApplicationContext(), "Device Paired", Toast.LENGTH_SHORT).show();
                 pairedSuccess = true;
             }
+<<<<<<< HEAD
         } else { // Device is already paired
             pairedSuccess = true;
         }
+=======
+        } else
+            pairedSuccess = true;
+>>>>>>> 70de73c6fe0dd6b62106dd17ae57b0ed2981eb69
         return pairedSuccess;
     }
 
