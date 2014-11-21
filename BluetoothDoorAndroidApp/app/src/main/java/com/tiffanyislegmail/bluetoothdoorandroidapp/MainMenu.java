@@ -4,7 +4,10 @@ import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -22,8 +25,6 @@ import java.util.UUID;
 
 public class MainMenu extends Activity implements View.OnClickListener {
     public static final String TAG = "writeException";
-
-    public DataOutputStream os;
 
     // Bluetooth addresses & info
     public String address = "20:14:03:24:51:82"; //device address
@@ -52,7 +53,12 @@ public class MainMenu extends Activity implements View.OnClickListener {
         userName = sharedPrefs.getUserName(context);
         userNameBox.setText(userName);
 
-
+        IntentFilter filter1 = new IntentFilter(BluetoothDevice.ACTION_ACL_CONNECTED);
+        IntentFilter filter2 = new IntentFilter(BluetoothDevice.ACTION_ACL_DISCONNECT_REQUESTED);
+        IntentFilter filter3 = new IntentFilter(BluetoothDevice.ACTION_ACL_DISCONNECTED);
+        this.registerReceiver(mReceiver, filter1);
+        this.registerReceiver(mReceiver, filter2);
+        this.registerReceiver(mReceiver, filter3);
 
 
 
@@ -80,25 +86,22 @@ public class MainMenu extends Activity implements View.OnClickListener {
                     }
                 } else
                     Toast.makeText(getApplicationContext(), "Android Door is out of range.", Toast.LENGTH_SHORT).show();
+
                 break;
 
             case R.id.unlockDoorBtn:
-                Toast.makeText(getApplicationContext(), "Unlocking Door", Toast.LENGTH_SHORT).show();
-                try {
-                    BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
-                    Method m = device.getClass().getMethod("createRfcommSocket", new Class[]{int.class});
+                enableBluetooth();
+                if(findAndPairDevice()) {
+                    Toast.makeText(getApplicationContext(), "Success find and pair", Toast.LENGTH_SHORT).show();
+                    try {
+                        connectAndSend("u"); // send string "u" to lock device
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Log.e("BLUETOOTH unLock", e.getMessage());
+                    }
+                } else
+                    Toast.makeText(getApplicationContext(), "Android Door is out of range.", Toast.LENGTH_SHORT).show();
 
-                    BluetoothSocket clientSocket = (BluetoothSocket) m.invoke(device, 1);
-
-                    clientSocket.connect();
-
-                    os = new DataOutputStream(clientSocket.getOutputStream());
-
-                    new clientSock1().start();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Log.e("BLUETOOTH Lock", e.getMessage());
-                }
                 break;
 
             case R.id.resetPasswordBtn:
@@ -112,28 +115,7 @@ public class MainMenu extends Activity implements View.OnClickListener {
         }
     }
 
-    public class clientSock extends Thread {
-        public void run () {
-            try {
-                os.writeBytes("L"); // anything you want
-                os.flush();
-            } catch (Exception e1) {
-                e1.printStackTrace();
-                return;
-            }
-        }
-    }
-    public class clientSock1 extends Thread {
-        public void run () {
-            try {
-                os.writeBytes("U"); // anything you want
-                os.flush();
-            } catch (Exception e1) {
-                e1.printStackTrace();
-                return;
-            }
-        }
-    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -189,6 +171,7 @@ public class MainMenu extends Activity implements View.OnClickListener {
             // Attempt to create BluetoothSocket
             try {
                 mmSocket = device.createInsecureRfcommSocketToServiceRecord(MY_UUID);
+                BluetoothAdapter.getDefaultAdapter().cancelDiscovery();
             } catch (IOException e1) {
                 Toast.makeText(getApplicationContext(), "Catch 1", Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "Socket not created");
@@ -196,17 +179,20 @@ public class MainMenu extends Activity implements View.OnClickListener {
             }
             // Connect to BluetoothSocket
             try {
+                BluetoothAdapter.getDefaultAdapter().cancelDiscovery();
                 mmSocket.connect();
                 Toast.makeText(getApplicationContext(), "Attempting to connect", Toast.LENGTH_SHORT).show();
             } catch (IOException e) {
-                Toast.makeText(getApplicationContext(), "Catch 2", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), e.getMessage() , Toast.LENGTH_SHORT).show();
                 try {
-                    // Close BluetoothSocket
-                    mmSocket.close();
-                    Log.d(TAG, "Cannot connect");
-                } catch (IOException e1) {
-                    Log.d(TAG, "Socket not closed");
-                    e1.printStackTrace();
+                    Log.e("","trying fallback...");
+                    mmSocket =(BluetoothSocket) device.getClass().getMethod("createRfcommSocket", new Class[] {int.class}).invoke(device,1);
+                    mmSocket.connect();
+
+                    Log.e("", "Connected");
+                }
+                catch (Exception e2) {
+                    Log.e("", "Couldn't establish Bluetooth connection!");
                 }
             }
 
@@ -214,6 +200,7 @@ public class MainMenu extends Activity implements View.OnClickListener {
             try {
                 OutputStream mmOutStream = mmSocket.getOutputStream();
                 mmOutStream.write(toSend);
+                mmSocket.close();
                 Toast.makeText(getApplicationContext(), "Able to send.", Toast.LENGTH_SHORT).show();
             } catch (IOException e) {
                 Log.e(TAG, "Exception during write", e);
@@ -223,8 +210,36 @@ public class MainMenu extends Activity implements View.OnClickListener {
         }
         else
             Toast.makeText(getApplicationContext(), "Attempted Connect, device not paired.", Toast.LENGTH_SHORT).show();
+       /*
+        try {
+            // Close BluetoothSocket
+            mmSocket.close();
+            Toast.makeText(getApplicationContext(), "closing socket", Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "Done-closing Socket");
+        } catch (IOException e1) {
+            Log.d(TAG, "Done-Socket not closed");
+            Toast.makeText(getApplicationContext(), "can't close socket", Toast.LENGTH_SHORT).show();
+            e1.printStackTrace();
+        }
+        */
     }
+    //The BroadcastReceiver that listens for bluetooth broadcasts
+    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
 
+            if (BluetoothDevice.ACTION_ACL_CONNECTED.equals(action)) {
+                //Do something if connected
+                Toast.makeText(getApplicationContext(), "BT Connected", Toast.LENGTH_SHORT).show();
+            }
+            else if (BluetoothDevice.ACTION_ACL_DISCONNECTED.equals(action)) {
+                //Do something if disconnected
+                Toast.makeText(getApplicationContext(), "BT Disconnected", Toast.LENGTH_SHORT).show();
+            }
+            //else if...
+        }
+    };
     private void pairDevice(BluetoothDevice device) {
         try {
             Method method = device.getClass().getMethod("createBond", (Class[]) null);
