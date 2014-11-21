@@ -26,8 +26,8 @@ public class MainMenu extends Activity implements View.OnClickListener {
     public DataOutputStream os;
 
     // Bluetooth addresses & info
-    public String address = "84:7A:88:FE:64:57";//"20:14:03:24:51:82"; //device address
-    private static final UUID MY_UUID = UUID.fromString("0000110E-0000-1000-8000-00805F9B34FB");
+    public String address = "20:14:03:24:51:82"; //device address
+    private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"); // Standard SPP UUID
     private BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
     BluetoothDevice device;
@@ -71,6 +71,7 @@ public class MainMenu extends Activity implements View.OnClickListener {
             case R.id.lockDoorBtn:
                 enableBluetooth();
                 if(findAndPairDevice()) {
+                    Toast.makeText(getApplicationContext(), "Success find and pair", Toast.LENGTH_SHORT).show();
                     try {
                         connectAndSend("l"); // send string "l" to lock device
                     } catch (Exception e) {
@@ -170,8 +171,10 @@ public class MainMenu extends Activity implements View.OnClickListener {
                 Toast.makeText(getApplicationContext(), "Device Paired", Toast.LENGTH_SHORT).show();
                 pairedSuccess = true;
             }
-        } else  // Device is already paired
+        } else { // Device is already paired
             pairedSuccess = true;
+            Toast.makeText(getApplicationContext(), "Device Already Paired", Toast.LENGTH_SHORT).show();
+        }
         return pairedSuccess;
     }
 
@@ -182,17 +185,21 @@ public class MainMenu extends Activity implements View.OnClickListener {
 
         // Check if device is paired correctly. If paired, connect to device
         if (device.getBondState() == BluetoothDevice.BOND_BONDED) {
+            Toast.makeText(getApplicationContext(), "Attempting to create socket", Toast.LENGTH_SHORT).show();
             // Attempt to create BluetoothSocket
             try {
                 mmSocket = device.createInsecureRfcommSocketToServiceRecord(MY_UUID);
             } catch (IOException e1) {
+                Toast.makeText(getApplicationContext(), "Catch 1", Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "Socket not created");
                 e1.printStackTrace();
             }
             // Connect to BluetoothSocket
             try {
                 mmSocket.connect();
+                Toast.makeText(getApplicationContext(), "Attempting to connect", Toast.LENGTH_SHORT).show();
             } catch (IOException e) {
+                Toast.makeText(getApplicationContext(), "Catch 2", Toast.LENGTH_SHORT).show();
                 try {
                     // Close BluetoothSocket
                     mmSocket.close();
@@ -210,6 +217,8 @@ public class MainMenu extends Activity implements View.OnClickListener {
                 Toast.makeText(getApplicationContext(), "Able to send.", Toast.LENGTH_SHORT).show();
             } catch (IOException e) {
                 Log.e(TAG, "Exception during write", e);
+                Toast.makeText(getApplicationContext(), "Catch 3", Toast.LENGTH_SHORT).show();
+
             }
         }
         else
