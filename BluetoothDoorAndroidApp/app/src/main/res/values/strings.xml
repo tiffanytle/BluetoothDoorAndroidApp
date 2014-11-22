@@ -33,6 +33,6 @@
     <string name="text_bluetooth_off">Bluetooth is Off</string>
     <string name="text_bluetooth_on">Bluetooth is On</string>
     <string name="title_activity_splash_screen">SplashScreen</string>
-    <string name="splash_screen_title">the bluetooth door opener app</string>
+    <string name="splash_screen_title">Android Door</string>
 
 </resources>

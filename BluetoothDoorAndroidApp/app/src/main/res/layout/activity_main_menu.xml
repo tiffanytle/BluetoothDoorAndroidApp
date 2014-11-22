@@ -66,16 +66,6 @@
         android:text="@string/button_unlock" />
 
     <Button
-        android:id="@+id/bluetooth"
-        android:layout_width="1in"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dip"
-        android:padding="10dip"
-        android:background="@drawable/roundbutton"
-        android:textColor="@color/gray"
-        android:text="@string/button_bluetooth" />
-
-    <Button
         android:id="@+id/resetPasswordBtn"
         android:layout_width="1in"
         android:layout_height="wrap_content"

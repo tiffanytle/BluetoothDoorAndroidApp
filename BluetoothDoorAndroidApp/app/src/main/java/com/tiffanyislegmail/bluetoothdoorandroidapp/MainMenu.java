@@ -1,11 +1,13 @@
 package com.tiffanyislegmail.bluetoothdoorandroidapp;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
@@ -16,7 +18,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.reflect.Method;
@@ -105,12 +106,28 @@ public class MainMenu extends Activity implements View.OnClickListener {
                 break;
 
             case R.id.resetPasswordBtn:
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+                alertDialogBuilder
+                        .setMessage("Are you sure you want to reset your password?")
+                        .setCancelable(false)
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener () {
+                            public void onClick (DialogInterface dialog, int id) {
+                                Intent intent_reset = new Intent(context, CreateNewUser.class);
+                                startActivity(intent_reset);
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+
+            });
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+
+
                 Intent intent_reset = new Intent(v.getContext(), CreateNewUser.class);
                 startActivity(intent_reset);
-                break;
-            case R.id.bluetooth:
-                Intent intent1 = new Intent(v.getContext(), bluetooth.class);
-                startActivity(intent1);
                 break;
         }
     }
