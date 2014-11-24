@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,8 +39,14 @@ public class MainMenu extends Activity implements View.OnClickListener {
     private shared_preferences sharedPrefs = new shared_preferences();
     Activity context = this;
 
-    TextView userNameBox;
+    TextView userNameBox, btProgressText;
+    ProgressBar btProgressBar;
     String userName;
+
+    String btEnable = "Enabling Bluetooth...",
+           btPair = "Pairing to Android Door...",
+           btConnect = "Connecting to Android Door...";
+
 
 
 
@@ -48,9 +55,15 @@ public class MainMenu extends Activity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
 
+        // Initialize TextView
         userNameBox = (TextView) findViewById(R.id.displayUserName);
+        btProgressText = (TextView) findViewById(R.id.btProgressText);
 
-        // Retrieving user name
+        // Initialize ProgressBar
+        btProgressBar = (ProgressBar) findViewById(R.id.bluetoothProgress);
+        btProgressBar.setVisibility(View.INVISIBLE);
+
+        // Initialize shared prefs to retrieving user name
         userName = sharedPrefs.getUserName(context);
         userNameBox.setText(userName);
 
@@ -64,11 +77,9 @@ public class MainMenu extends Activity implements View.OnClickListener {
 
 
         Button clickResetPassword = (Button) findViewById(R.id.resetPasswordBtn);
-        Button clickBluetooth = (Button) findViewById(R.id.bluetooth);
         Button LockDoorBtn = (Button) findViewById(R.id.lockDoorBtn);
         Button UnlockDoorBtn = (Button) findViewById(R.id.unlockDoorBtn);
         clickResetPassword.setOnClickListener(this);
-        clickBluetooth.setOnClickListener(this);
         LockDoorBtn.setOnClickListener(this);
         UnlockDoorBtn.setOnClickListener(this);
 
@@ -76,9 +87,9 @@ public class MainMenu extends Activity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.lockDoorBtn:
+                btProgressBar.setVisibility(View.VISIBLE);
                 enableBluetooth();
                 if(findAndPairDevice()) {
-                    Toast.makeText(getApplicationContext(), "Success find and pair", Toast.LENGTH_SHORT).show();
                     try {
                         connectAndSend("l"); // send string "l" to lock device
                     } catch (Exception e) {
@@ -87,13 +98,14 @@ public class MainMenu extends Activity implements View.OnClickListener {
                     }
                 } else
                     Toast.makeText(getApplicationContext(), "Android Door is out of range.", Toast.LENGTH_SHORT).show();
-
+                btProgressBar.setVisibility(View.INVISIBLE);
+                btProgressText.setText("");
                 break;
 
             case R.id.unlockDoorBtn:
+                btProgressBar.setVisibility(View.VISIBLE);
                 enableBluetooth();
                 if(findAndPairDevice()) {
-                    Toast.makeText(getApplicationContext(), "Success find and pair", Toast.LENGTH_SHORT).show();
                     try {
                         connectAndSend("u"); // send string "u" to lock device
                     } catch (Exception e) {
@@ -102,7 +114,8 @@ public class MainMenu extends Activity implements View.OnClickListener {
                     }
                 } else
                     Toast.makeText(getApplicationContext(), "Android Door is out of range.", Toast.LENGTH_SHORT).show();
-
+                btProgressBar.setVisibility(View.INVISIBLE);
+                btProgressText.setText("");
                 break;
 
             case R.id.resetPasswordBtn:
@@ -124,10 +137,6 @@ public class MainMenu extends Activity implements View.OnClickListener {
             });
                 AlertDialog alertDialog = alertDialogBuilder.create();
                 alertDialog.show();
-
-
-                Intent intent_reset = new Intent(v.getContext(), CreateNewUser.class);
-                startActivity(intent_reset);
                 break;
         }
     }
@@ -144,15 +153,14 @@ public class MainMenu extends Activity implements View.OnClickListener {
     This function enables bluetooth if it is disabled.
      */
     private void enableBluetooth() {
+        btProgressText.setText(btEnable);
         if (!mBluetoothAdapter.isEnabled()) {
             Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(intent, 1000);
             long start = System.currentTimeMillis();
             long end = start + 10*1000; // 15 seconds * 1000 ms/sec
             while (System.currentTimeMillis() < end); //wait 10 seconds
-            Toast.makeText(getApplicationContext(), "Bluetooth is now enabled", Toast.LENGTH_SHORT).show();
-        } else
-            Toast.makeText(getApplicationContext(), "Bluetooth is already enabled", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private boolean findAndPairDevice() {
@@ -164,15 +172,14 @@ public class MainMenu extends Activity implements View.OnClickListener {
             long end = start + 15*1000; // 15 seconds * 1000 ms/sec
             while (System.currentTimeMillis() < end); //wait 15 seconds
             if (device.getBondState() != BluetoothDevice.BOND_BONDED) {
-                Toast.makeText(getApplicationContext(), "Device NOT Paired", Toast.LENGTH_SHORT).show();
                 pairedSuccess = false;
             } else {
-                Toast.makeText(getApplicationContext(), "Device Paired", Toast.LENGTH_SHORT).show();
+                btProgressText.setText(btPair);
                 pairedSuccess = true;
             }
         } else { // Device is already paired
+            btProgressText.setText(btPair);
             pairedSuccess = true;
-            Toast.makeText(getApplicationContext(), "Device Already Paired", Toast.LENGTH_SHORT).show();
         }
         return pairedSuccess;
     }
@@ -198,7 +205,7 @@ public class MainMenu extends Activity implements View.OnClickListener {
             try {
                 BluetoothAdapter.getDefaultAdapter().cancelDiscovery();
                 mmSocket.connect();
-                Toast.makeText(getApplicationContext(), "Attempting to connect", Toast.LENGTH_SHORT).show();
+                btProgressText.setText(btConnect);
             } catch (IOException e) {
                 Toast.makeText(getApplicationContext(), e.getMessage() , Toast.LENGTH_SHORT).show();
                 try {
