@@ -95,6 +95,7 @@ public class MainMenu extends Activity implements View.OnClickListener {
                     } catch (Exception e) {
                         e.printStackTrace();
                         Log.e("BLUETOOTH Lock", e.getMessage());
+                        Toast.makeText(getApplicationContext(), "Lock failed! Please try again.", Toast.LENGTH_SHORT).show();
                     }
                 } else
                     Toast.makeText(getApplicationContext(), "Android Door is out of range.", Toast.LENGTH_SHORT).show();
@@ -111,6 +112,7 @@ public class MainMenu extends Activity implements View.OnClickListener {
                     } catch (Exception e) {
                         e.printStackTrace();
                         Log.e("BLUETOOTH unLock", e.getMessage());
+                        Toast.makeText(getApplicationContext(), "Unlock failed! Please try again.", Toast.LENGTH_SHORT).show();
                     }
                 } else
                     Toast.makeText(getApplicationContext(), "Android Door is out of range.", Toast.LENGTH_SHORT).show();
@@ -234,19 +236,8 @@ public class MainMenu extends Activity implements View.OnClickListener {
         }
         else
             Toast.makeText(getApplicationContext(), "Attempted Connect, device not paired.", Toast.LENGTH_SHORT).show();
-       /*
-        try {
-            // Close BluetoothSocket
-            mmSocket.close();
-            Toast.makeText(getApplicationContext(), "closing socket", Toast.LENGTH_SHORT).show();
-            Log.d(TAG, "Done-closing Socket");
-        } catch (IOException e1) {
-            Log.d(TAG, "Done-Socket not closed");
-            Toast.makeText(getApplicationContext(), "can't close socket", Toast.LENGTH_SHORT).show();
-            e1.printStackTrace();
-        }
-        */
     }
+
     //The BroadcastReceiver that listens for bluetooth broadcasts
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
@@ -261,7 +252,6 @@ public class MainMenu extends Activity implements View.OnClickListener {
                 //Do something if disconnected
                 Toast.makeText(getApplicationContext(), "BT Disconnected", Toast.LENGTH_SHORT).show();
             }
-            //else if...
         }
     };
     private void pairDevice(BluetoothDevice device) {

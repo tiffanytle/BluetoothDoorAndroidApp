@@ -76,7 +76,6 @@ public class CreateNewUser extends Activity implements View.OnClickListener {
         buttonCreate.setOnClickListener(this);
 
         userExist = false;
-
     }
 
     @Override
@@ -94,9 +93,11 @@ public class CreateNewUser extends Activity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            /* Clear the data displayed on screen, call clearData method */
             case R.id.buttonClear:
                 clearData();
                 break;
+            /* Check if user entered all entries, then proceed to security questions */
             case R.id.buttonCreate:
                 if (readyPin == true & (userVal.getText().toString().length() > 0)) {
                     Intent intent = new Intent(v.getContext(), SecurityQuestions.class);
@@ -111,6 +112,7 @@ public class CreateNewUser extends Activity implements View.OnClickListener {
                     clearData();
                 }
                 break;
+            /* User enters values in number pad as pin */
             default:
                 Button pressedButton = (Button) v;
                 if (userEntry.length() < PIN_LENGTH) {
@@ -134,6 +136,7 @@ public class CreateNewUser extends Activity implements View.OnClickListener {
         }
     } // end onClick method
 
+    /* Clear data displayed on string */
     public void clearData () {
         if (userEntry.length() > 0) {
             pinBox0.setText("");
@@ -143,23 +146,11 @@ public class CreateNewUser extends Activity implements View.OnClickListener {
             userEntry = "";
             readyPin = false;
         }
-    } // end clearData method
+    }
 
+    /* Do not allow backspace */
     @Override
     public void onBackPressed() {
     }
-
-    /*
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        saveData();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        saveData();
-    } */
 
 } // end CreateNewUser class

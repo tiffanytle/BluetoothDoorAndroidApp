@@ -48,6 +48,7 @@ public class SecurityQuestions extends Activity implements View.OnClickListener 
         return super.onOptionsItemSelected(item);
     }
 
+    /* Check if security questions were answered correctly */
     @Override
     public void onClick(View v) {
         secReady = securityReady();
@@ -62,6 +63,7 @@ public class SecurityQuestions extends Activity implements View.OnClickListener 
             Toast.makeText(context, failMsg, Toast.LENGTH_SHORT).show();
     }
 
+    /* Method to check if security questions were answered */
     public boolean securityReady() {
         boolean realAnswers = false;
         if (secQuestVacation.getText().toString().length() > 0 &
@@ -71,6 +73,7 @@ public class SecurityQuestions extends Activity implements View.OnClickListener 
         return realAnswers;
     }
 
+    /* Clear data on screen */
     public void clearData() {
         secQuestVacation.setText("");
         secQuestMakeCar.setText("");

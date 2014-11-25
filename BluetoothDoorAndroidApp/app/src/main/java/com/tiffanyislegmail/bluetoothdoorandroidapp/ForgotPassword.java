@@ -24,7 +24,6 @@ public class ForgotPassword extends Activity implements View.OnClickListener {
     private shared_preferences sharedPrefs = new shared_preferences();
     Activity context = this;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,12 +53,14 @@ public class ForgotPassword extends Activity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         correctAnswer = compareAnswers();
+        /* If answers are correct, proceed to reset password */
         if (correctAnswer) {
             Intent intent = new Intent(v.getContext(), CreateNewUser.class);
             sharedPrefs.clearSavedPrefs(context);
             clearData();
             startActivity(intent);
         }
+        /* If answers are wrong, then lock the app after 3 attempts */
         else {
             counter--;
             if (counter == 0) {
@@ -74,6 +75,8 @@ public class ForgotPassword extends Activity implements View.OnClickListener {
         }
     }
 
+    /* This method compares user entries to saved data. If data does not match, then the app will
+     * lock the user out. If the data matches, then it will allow the user to reset password */
     public boolean compareAnswers() {
         boolean correctCompare = false;
         String tryVacation = answerVacation.getText().toString();
@@ -90,6 +93,7 @@ public class ForgotPassword extends Activity implements View.OnClickListener {
         return correctCompare;
     }
 
+    /* Clear data on screen */
     public void clearData() {
         answerVacation.setText("");
         answerMakeCar.setText("");

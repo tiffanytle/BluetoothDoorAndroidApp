@@ -23,6 +23,7 @@ public class shared_preferences extends Activity {
         super();
     }
 
+    /* Save user data (pin, username) to shared preferences */
     public void saveData(Context context, String userName, String pinValue) {
         SharedPreferences settings;
         SharedPreferences.Editor editor;
@@ -38,6 +39,7 @@ public class shared_preferences extends Activity {
         editor.commit();
     }
 
+    /* Save security questions to shared preferences */
     public void saveSecurity(Context context, String vacation, String make, String model) {
         SharedPreferences settings;
         SharedPreferences.Editor editor;
@@ -51,6 +53,7 @@ public class shared_preferences extends Activity {
         editor.commit();
     }
 
+    /* Check if a user is saved in shared preferences */
     public boolean getUserExist(Context context) {
         boolean exist;
         SharedPreferences settings = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
@@ -58,6 +61,7 @@ public class shared_preferences extends Activity {
         return exist;
     }
 
+    /* Retrieve pin value from shared preferences */
     public String getPinValue(Context context) {
         String pin = null;
         SharedPreferences settings = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
@@ -65,6 +69,7 @@ public class shared_preferences extends Activity {
         return pin;
     }
 
+    /* Retrieve user name from shared preferences */
     public String getUserName(Context context) {
         String name = null;
         SharedPreferences settings = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
@@ -72,6 +77,7 @@ public class shared_preferences extends Activity {
         return name;
     }
 
+    /* Retrieve vacation security question from shared preferences*/
     public String getSecurityVacation(Context context) {
         String vacation = null;
         SharedPreferences settings = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
@@ -79,6 +85,7 @@ public class shared_preferences extends Activity {
         return vacation;
     }
 
+    /* Retrieve vacation car make question from shared preferences*/
     public String getSecurityCarMake(Context context) {
         String carMake = null;
         SharedPreferences settings = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
@@ -86,6 +93,7 @@ public class shared_preferences extends Activity {
         return carMake;
     }
 
+    /* Retrieve car model security question from shared preferences*/
     public String getSecurityCarModel(Context context) {
         String carModel = null;
         SharedPreferences settings = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
@@ -93,6 +101,7 @@ public class shared_preferences extends Activity {
         return carModel;
     }
 
+    /* Clears saved data in shared preferences */
     public void clearSavedPrefs(Context context) {
         SharedPreferences settings = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
@@ -100,8 +109,8 @@ public class shared_preferences extends Activity {
         editor.commit();
     }
 
+    /* Saves starting time of locked app in shared preferences */
     public void setLockApp(Context context) {
-
         SharedPreferences settings = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
 
@@ -112,6 +121,7 @@ public class shared_preferences extends Activity {
         editor.commit();
     }
 
+    /* Check to see if app is locked */
     public boolean checkLockApp (Context context) {
         boolean appLocked;
         long compareLockTime, startLockTime, stopLockTime;

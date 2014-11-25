@@ -78,9 +78,11 @@ public class PromptPassword extends Activity implements View.OnClickListener {
 
     public void onClick (View v) {
         switch (v.getId()) {
+            /* Clear data on screen */
             case R.id.buttonClear:
                 clearData();
                 break;
+            /* Check if entered pin is correct to proceed login */
             case R.id.buttonLogin:
                 if (checkAppLocked() == true) {
                     if (correctPassword == true) {
@@ -101,6 +103,7 @@ public class PromptPassword extends Activity implements View.OnClickListener {
                 } else
                     Toast.makeText(context, "Sorry, you are locked out.", Toast.LENGTH_SHORT).show();
                 break;
+            /* Redirect user to forget password page */
             case R.id.forgotPassword:
                 if (checkAppLocked() == true) {
                     Intent intent = new Intent(v.getContext(), ForgotPassword.class);
@@ -109,6 +112,7 @@ public class PromptPassword extends Activity implements View.OnClickListener {
                 } else
                     Toast.makeText(context, "Sorry, you are locked out.", Toast.LENGTH_SHORT).show();
                 break;
+            /* User enters pin value */
             default:
                 Button pressedButton = (Button) v;
                 if (userEntry.length() < PIN_LENGTH) {
@@ -133,6 +137,7 @@ public class PromptPassword extends Activity implements View.OnClickListener {
         }
     }
 
+    /* Method to clear data on screen */
     public void clearData () {
         if (userEntry.length() > 0) {
             pinBox0.setText("");
@@ -144,6 +149,7 @@ public class PromptPassword extends Activity implements View.OnClickListener {
         }
     }
 
+    /* Method to check if app is already locked */
     public boolean checkAppLocked() {
         boolean isAppLocked, notLocked = false;
         isAppLocked = sharedPrefs.checkLockApp(context);
@@ -164,20 +170,8 @@ public class PromptPassword extends Activity implements View.OnClickListener {
         return super.onOptionsItemSelected(item);
     }
 
+    /* Do not allow user to go back */
     @Override
     public void onBackPressed() {
     }
-
-    /*
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        callCreate.saveData();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        callCreate.saveData();
-    } */
 }

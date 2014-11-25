@@ -27,6 +27,8 @@ public class SplashScreen extends Activity {
             public void run() {
                 if ((checkAppLocked()) == true) {
                     userExist = sharedPrefs.getUserExist(context);
+                    /* If user exists, then prompt password. If user doesn't exist, then create a
+                     * a new user */
                     if (userExist) {
                         Intent intent = new Intent(SplashScreen.this, PromptPassword.class);
                         startActivity(intent);
@@ -36,7 +38,7 @@ public class SplashScreen extends Activity {
                         startActivity(intent1);
                         SplashScreen.this.finish();
                     }
-                } else {
+                } else { /* User is locked out of app */
                     Toast.makeText(context, "You are currently locked out. Please try again later."
                             , Toast.LENGTH_SHORT).show();
                     System.exit(0);
@@ -45,6 +47,7 @@ public class SplashScreen extends Activity {
         }, SPLASH_DISPLAY_LENGTH);
     }
 
+    /* Check if user is locked out of app */
     public boolean checkAppLocked() {
         boolean notLocked = false;
         isAppLocked = sharedPrefs.checkLockApp(context);
@@ -52,5 +55,4 @@ public class SplashScreen extends Activity {
             notLocked = true;
         return notLocked;
     }
-
 }
