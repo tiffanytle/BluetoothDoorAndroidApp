@@ -71,9 +71,10 @@ public class PromptPassword extends Activity implements View.OnClickListener {
         buttonClear.setOnClickListener(this);
         buttonLogin.setOnClickListener(this);
         buttonForget.setOnClickListener(this);
-
-
         pinValue = sharedPrefs.getPinValue(context);
+
+        if (checkAppLocked() == false)
+            Toast.makeText(context, "You are currently locked out and cannot perform any action.", Toast.LENGTH_SHORT).show();
     }
 
     public void onClick (View v) {
