@@ -96,15 +96,8 @@ public class PromptPassword extends Activity implements View.OnClickListener {
                         if (counter == 0) {
                             Toast.makeText(context, "No more attempts.", Toast.LENGTH_SHORT).show();
                             sharedPrefs.setLockApp(context);
-                            try {
-                                Thread.sleep(5000); // five seconds
-                            } catch(InterruptedException ex) {
-                                Thread.currentThread().interrupt();
-                            }
-                            System.exit(0);
-
-                        }
-                        Toast.makeText(context, failMsg + counter, Toast.LENGTH_SHORT).show();
+                        } else
+                            Toast.makeText(context, failMsg + counter, Toast.LENGTH_SHORT).show();
                     }
                 } else
                     Toast.makeText(context, "Sorry, you are locked out.", Toast.LENGTH_SHORT).show();
