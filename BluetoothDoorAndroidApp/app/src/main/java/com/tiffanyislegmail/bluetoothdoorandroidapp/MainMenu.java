@@ -24,11 +24,13 @@ import java.io.OutputStream;
 import java.lang.reflect.Method;
 import java.util.UUID;
 
+/*Description:
 
+ */
 public class MainMenu extends Activity implements View.OnClickListener {
     public static final String TAG = "writeException";
-
-    // Bluetooth addresses & info
+    public boolean connected = false;
+    // Bluetooth address & info
     public String address = "20:14:03:24:51:82"; //device address
     private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"); // Standard SPP UUID
     private BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -47,9 +49,6 @@ public class MainMenu extends Activity implements View.OnClickListener {
            btPair = "Pairing to Android Door...",
            btConnect = "Connecting to Android Door...";
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,14 +66,13 @@ public class MainMenu extends Activity implements View.OnClickListener {
         userName = sharedPrefs.getUserName(context);
         userNameBox.setText(userName);
 
+        //intents for checking state of bluetooth devices
         IntentFilter filter1 = new IntentFilter(BluetoothDevice.ACTION_ACL_CONNECTED);
         IntentFilter filter2 = new IntentFilter(BluetoothDevice.ACTION_ACL_DISCONNECT_REQUESTED);
         IntentFilter filter3 = new IntentFilter(BluetoothDevice.ACTION_ACL_DISCONNECTED);
         this.registerReceiver(mReceiver, filter1);
         this.registerReceiver(mReceiver, filter2);
         this.registerReceiver(mReceiver, filter3);
-
-
 
         Button clickResetPassword = (Button) findViewById(R.id.resetPasswordBtn);
         Button LockDoorBtn = (Button) findViewById(R.id.lockDoorBtn);
@@ -153,6 +151,7 @@ public class MainMenu extends Activity implements View.OnClickListener {
 
     /*
     This function enables bluetooth if it is disabled.
+    Gives user 10 seconds to accept enabling bluetooth.
      */
     private void enableBluetooth() {
         btProgressText.setText(btEnable);
@@ -160,18 +159,23 @@ public class MainMenu extends Activity implements View.OnClickListener {
             Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(intent, 1000);
             long start = System.currentTimeMillis();
-            long end = start + 10*1000; // 15 seconds * 1000 ms/sec
+            long end = start + 10*1000; // 10 seconds * 1000 ms/sec
             while (System.currentTimeMillis() < end); //wait 10 seconds
         }
     }
 
+    /*
+    This function looks for and pairs with designated bluetooth device.
+    It will wait for 15 seconds for user to accept bluetooth pairing.
+    It will return true if the device is paired, and false otherwise.
+     */
     private boolean findAndPairDevice() {
         boolean pairedSuccess;
         device = mBluetoothAdapter.getRemoteDevice(address);
         if (device.getBondState() != BluetoothDevice.BOND_BONDED) {
             pairDevice(device);
             long start = System.currentTimeMillis();
-            long end = start + 15*1000; // 15 seconds * 1000 ms/sec
+            long end = start + 15*1000; // 15 * 1000 ms/sec = 15sec delay
             while (System.currentTimeMillis() < end); //wait 15 seconds
             if (device.getBondState() != BluetoothDevice.BOND_BONDED) {
                 pairedSuccess = false;
@@ -186,6 +190,10 @@ public class MainMenu extends Activity implements View.OnClickListener {
         return pairedSuccess;
     }
 
+    /*
+    This function will establish connection between bluetooth devices and send
+    a message to lock or unlock the door.
+     */
     private void connectAndSend(String action) {
         device = mBluetoothAdapter.getRemoteDevice(address);
         BluetoothSocket mmSocket = null;
@@ -193,13 +201,13 @@ public class MainMenu extends Activity implements View.OnClickListener {
 
         // Check if device is paired correctly. If paired, connect to device
         if (device.getBondState() == BluetoothDevice.BOND_BONDED) {
-            Toast.makeText(getApplicationContext(), "Attempting to create socket", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getApplicationContext(), "Attempting to create socket", Toast.LENGTH_SHORT).show();
             // Attempt to create BluetoothSocket
             try {
                 mmSocket = device.createInsecureRfcommSocketToServiceRecord(MY_UUID);
                 BluetoothAdapter.getDefaultAdapter().cancelDiscovery();
             } catch (IOException e1) {
-                Toast.makeText(getApplicationContext(), "Catch 1", Toast.LENGTH_SHORT).show();
+               // Toast.makeText(getApplicationContext(), "Catch 1", Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "Socket not created");
                 e1.printStackTrace();
             }
@@ -209,7 +217,7 @@ public class MainMenu extends Activity implements View.OnClickListener {
                 mmSocket.connect();
                 btProgressText.setText(btConnect);
             } catch (IOException e) {
-                Toast.makeText(getApplicationContext(), e.getMessage() , Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), e.getMessage() , Toast.LENGTH_SHORT).show();
                 try {
                     Log.e("","trying fallback...");
                     mmSocket =(BluetoothSocket) device.getClass().getMethod("createRfcommSocket", new Class[] {int.class}).invoke(device,1);
@@ -223,22 +231,25 @@ public class MainMenu extends Activity implements View.OnClickListener {
             }
 
             // Attempt to send special character to lock or unlock
-            try {
-                OutputStream mmOutStream = mmSocket.getOutputStream();
-                mmOutStream.write(toSend);
-                mmSocket.close();
-                Toast.makeText(getApplicationContext(), "Able to send.", Toast.LENGTH_SHORT).show();
-            } catch (IOException e) {
-                Log.e(TAG, "Exception during write", e);
-                Toast.makeText(getApplicationContext(), "Catch 3", Toast.LENGTH_SHORT).show();
-
+            if (connected) {
+                try {
+                    OutputStream mmOutStream = mmSocket.getOutputStream();
+                    mmOutStream.write(toSend);
+                    mmSocket.close();
+                  //  Toast.makeText(getApplicationContext(), "Able to send.", Toast.LENGTH_SHORT).show();
+                } catch (IOException e) {
+                    Log.e(TAG, "Exception during write", e);
+                    //Toast.makeText(getApplicationContext(), "Catch 3", Toast.LENGTH_SHORT).show();
+                }
             }
+            else
+                Toast.makeText(getApplicationContext(), "Device not connected.", Toast.LENGTH_SHORT).show();
         }
         else
             Toast.makeText(getApplicationContext(), "Attempted Connect, device not paired.", Toast.LENGTH_SHORT).show();
     }
 
-    //The BroadcastReceiver that listens for bluetooth broadcasts
+    //The BroadcastReceiver that listens for bluetooth status broadcasts
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -246,14 +257,20 @@ public class MainMenu extends Activity implements View.OnClickListener {
 
             if (BluetoothDevice.ACTION_ACL_CONNECTED.equals(action)) {
                 //Do something if connected
-                Toast.makeText(getApplicationContext(), "BT Connected", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "BT Connected", Toast.LENGTH_SHORT).show();
+                connected = true; //BT state connected
             }
             else if (BluetoothDevice.ACTION_ACL_DISCONNECTED.equals(action)) {
                 //Do something if disconnected
-                Toast.makeText(getApplicationContext(), "BT Disconnected", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "BT Disconnected", Toast.LENGTH_SHORT).show();
+                connected = false;
             }
         }
     };
+    /*
+    This function creates a bond between two devices, pairing them, allowing communication between
+    the devices.
+     */
     private void pairDevice(BluetoothDevice device) {
         try {
             Method method = device.getClass().getMethod("createBond", (Class[]) null);

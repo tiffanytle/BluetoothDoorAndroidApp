@@ -10,12 +10,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/*Description:
 
+ */
 public class CreateNewUser extends Activity implements View.OnClickListener {
-
-    private static String pinValue = "";
-    private static String userName = "";
-    private static boolean userExist;
 
     // SharedPreferences
     private shared_preferences sharedPrefs = new shared_preferences();
@@ -75,7 +73,6 @@ public class CreateNewUser extends Activity implements View.OnClickListener {
         buttonClear.setOnClickListener(this);
         buttonCreate.setOnClickListener(this);
 
-        userExist = false;
     }
 
     @Override

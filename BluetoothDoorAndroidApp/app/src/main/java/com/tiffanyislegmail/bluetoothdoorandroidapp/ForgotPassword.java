@@ -9,7 +9,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+/*Description:
 
+ */
 public class ForgotPassword extends Activity implements View.OnClickListener {
 
     EditText answerVacation, answerMakeCar, answerModelCar;

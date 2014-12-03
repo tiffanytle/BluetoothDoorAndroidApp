@@ -9,6 +9,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/*Description:
+
+ */
 public class PromptPassword extends Activity implements View.OnClickListener {
 
     String userEntry = "";

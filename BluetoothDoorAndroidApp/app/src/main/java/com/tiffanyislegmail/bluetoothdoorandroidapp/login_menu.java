@@ -10,7 +10,9 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
+/*Description:
 
+ */
 public class login_menu extends Activity implements OnClickListener{
 
     boolean userExist = false, isAppLocked = false;

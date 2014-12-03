@@ -9,6 +9,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+/*Description:
+
+ */
 public class SecurityQuestions extends Activity implements View.OnClickListener {
 
     EditText secQuestVacation, secQuestMakeCar, secQuestModelCar;

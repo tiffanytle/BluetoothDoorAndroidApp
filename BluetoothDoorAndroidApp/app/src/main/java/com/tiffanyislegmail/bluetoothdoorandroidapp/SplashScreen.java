@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
+/*Description:
 
+ */
 public class SplashScreen extends Activity {
 
     private final int SPLASH_DISPLAY_LENGTH = 2500;
