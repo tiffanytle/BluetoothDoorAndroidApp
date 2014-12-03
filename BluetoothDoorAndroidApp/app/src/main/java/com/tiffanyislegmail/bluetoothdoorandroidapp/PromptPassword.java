@@ -94,10 +94,10 @@ public class PromptPassword extends Activity implements View.OnClickListener {
                         clearData();
                         counter--;
                         if (counter == 0) {
-                            Toast.makeText(context, "No more attempts. Redirecting...", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "No more attempts.", Toast.LENGTH_SHORT).show();
                             sharedPrefs.setLockApp(context);
-                            Intent intent = new Intent(v.getContext(), SplashScreen.class);
-                            startActivity(intent);
+                            System.exit(0);
+
                         }
                         Toast.makeText(context, failMsg + counter, Toast.LENGTH_SHORT).show();
                     }
