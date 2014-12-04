@@ -1,3 +1,12 @@
+/*----------------------------------------------------------------
+ * Author:       Tiffany Le and Thuan Chu
+ * File Name:    SplashScreen.java
+ * Created On:   11/04/2014
+ * Last updated: 12/03/2014
+ *
+ * Description:  Splash screen will display application name and
+ *               logo for 2.5 seconds.
+ *----------------------------------------------------------------*/
 package com.tiffanyislegmail.bluetoothdoorandroidapp;
 
 import android.app.Activity;
@@ -5,9 +14,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
-/*Description:
-
- */
 public class SplashScreen extends Activity {
 
     private final int SPLASH_DISPLAY_LENGTH = 2500;

@@ -1,3 +1,16 @@
+/*----------------------------------------------------------------
+ * Author:       Tiffany Le and Thuan Chu
+ * File Name:    ForgotPassword.java
+ * Created On:   09/10/2014
+ * Last updated: 12/03/2014
+ *
+ * Description:  Prompts the user to enter answers to security
+ *               questions that were previously saved when the
+ *               user created a new account. If the user enters
+ *               the information correctly, it will redirect to
+ *               create a new account.
+ *----------------------------------------------------------------*/
+
 package com.tiffanyislegmail.bluetoothdoorandroidapp;
 
 import android.app.Activity;
@@ -9,19 +22,22 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+<<<<<<< HEAD
 /*Description:
  *
  *
  */
+=======
+>>>>>>> efc9398e1e6fccfd34efb342f63eb8e808a64064
 public class ForgotPassword extends Activity implements View.OnClickListener {
 
     EditText answerVacation, answerMakeCar, answerModelCar;
-    Button buttonReset;
+    Button   buttonReset;
 
-    String failMsg = "Incorrect answers. Attempts left: ";
-    int counter = 3;
+    String   failMsg = "Incorrect answers. Attempts left: ";
+    int      counter = 3;
 
-    boolean correctAnswer = false;
+    boolean  correctAnswer = false;
 
     // SharedPreferences
     private shared_preferences sharedPrefs = new shared_preferences();
@@ -33,12 +49,11 @@ public class ForgotPassword extends Activity implements View.OnClickListener {
         setContentView(R.layout.activity_forgot_password);
 
         answerVacation = (EditText) findViewById(R.id.answer_vacation);
-        answerMakeCar = (EditText) findViewById(R.id.answer_makeCar);
+        answerMakeCar  = (EditText) findViewById(R.id.answer_makeCar);
         answerModelCar = (EditText) findViewById(R.id.answer_modelCar);
 
-        buttonReset = (Button) findViewById(R.id.buttonTry);
+        buttonReset    = (Button) findViewById(R.id.buttonTry);
         buttonReset.setOnClickListener(this);
-
     }
 
     @Override
@@ -53,6 +68,10 @@ public class ForgotPassword extends Activity implements View.OnClickListener {
         return super.onOptionsItemSelected(item);
     }
 
+    /* This method checks if the answers the user entered are valid. The user has
+     * three attempts to enter valid answers. If the user uses all of the attempts,
+     * the app will lock itself for 5 minutes.
+     */
     @Override
     public void onClick(View v) {
         correctAnswer = compareAnswers();
