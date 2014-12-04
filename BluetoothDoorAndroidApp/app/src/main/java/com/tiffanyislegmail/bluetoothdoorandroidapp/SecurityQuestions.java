@@ -1,3 +1,14 @@
+/*----------------------------------------------------------------
+ * Author:       Tiffany Le and Thuan Chu
+ * File Name:    SecurityQuestions.java
+ * Created On:   10/21/2014
+ * Last updated: 12/03/2014
+ *
+ * Description:  Prompts the user to answer security questions
+ *               for when the user forgets pin and needs to
+ *               reset the account. The questions include first
+ *               vacation and make/model of first car.
+ *----------------------------------------------------------------*/
 package com.tiffanyislegmail.bluetoothdoorandroidapp;
 
 import android.app.Activity;
@@ -9,17 +20,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-/*Description:
-
- */
 public class SecurityQuestions extends Activity implements View.OnClickListener {
 
-    EditText secQuestVacation, secQuestMakeCar, secQuestModelCar;
-    Button buttonSave;
+    EditText  secQuestVacation, secQuestMakeCar, secQuestModelCar;
+    Button    buttonSave;
 
     boolean secReady = false;
 
-    String failMsg = "Please answer all security questions.";
+    String failMsg   = "Please answer all security questions.";
 
     // SharedPreferences
     private shared_preferences sharedPrefs = new shared_preferences();
@@ -31,7 +39,7 @@ public class SecurityQuestions extends Activity implements View.OnClickListener 
         setContentView(R.layout.activity_security_questions);
 
         secQuestVacation = (EditText) findViewById(R.id.secQuest_vacation);
-        secQuestMakeCar = (EditText) findViewById(R.id.secQuest_makeCar);
+        secQuestMakeCar  = (EditText) findViewById(R.id.secQuest_makeCar);
         secQuestModelCar = (EditText) findViewById(R.id.secQuest_modelCar);
 
         buttonSave = (Button) findViewById(R.id.buttonSave);

@@ -1,3 +1,15 @@
+/*----------------------------------------------------------------
+ * Author:       Tiffany Le and Thuan Chu
+ * File Name:    CreateNewUser.java
+ * Created On:   09/09/2014
+ * Last updated: 12/03/2014
+ *
+ * Description:  Prompts the user to enter a user name and a 4-
+ *               digit pin which will be saved using shared
+ *               preferences. If the user enters valid entries,
+ *               the user will be redirected to answer security
+ *               questions.
+ *----------------------------------------------------------------*/
 package com.tiffanyislegmail.bluetoothdoorandroidapp;
 
 import android.app.Activity;
@@ -10,54 +22,51 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-/*Description:
-
- */
 public class CreateNewUser extends Activity implements View.OnClickListener {
 
     // SharedPreferences
     private shared_preferences sharedPrefs = new shared_preferences();
-    Activity context = this;
+    Activity context     = this;
 
-    String userEntry = "";
-    String failPin = "Invalid pin. Please try again.";
-    String failUser = "Invalid username. Please try again.";
+    String userEntry     = "";
+    String failPin       = "Invalid pin. Please try again.";
+    String failUser      = "Invalid username. Please try again.";
 
-    boolean readyPin = false;
+    boolean readyPin     = false;
 
     final int PIN_LENGTH = 4;
 
-    TextView pinBox0, pinBox1, pinBox2, pinBox3;
+    TextView   pinBox0, pinBox1, pinBox2, pinBox3;
 
-    EditText userVal;
+    EditText   userVal;
 
-    Button button0, button1, button2, button3, button4,
-            button5, button6, button7, button8, button9,
-            buttonCreate, buttonClear;
+    Button     button0, button1, button2, button3, button4,
+               button5, button6, button7, button8, button9,
+               buttonCreate, buttonClear;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_new_user);
 
-        pinBox0 = (TextView) findViewById(R.id.pinBox0);
-        pinBox1 = (TextView) findViewById(R.id.pinBox1);
-        pinBox2 = (TextView) findViewById(R.id.pinBox2);
-        pinBox3 = (TextView) findViewById(R.id.pinBox3);
+        pinBox0      = (TextView) findViewById(R.id.pinBox0);
+        pinBox1      = (TextView) findViewById(R.id.pinBox1);
+        pinBox2      = (TextView) findViewById(R.id.pinBox2);
+        pinBox3      = (TextView) findViewById(R.id.pinBox3);
 
-        userVal = (EditText) findViewById(R.id.editNewUsername);
+        userVal      = (EditText) findViewById(R.id.editNewUsername);
 
-        button0 = (Button) findViewById(R.id.button0);
-        button1 = (Button) findViewById(R.id.button1);
-        button2 = (Button) findViewById(R.id.button2);
-        button3 = (Button) findViewById(R.id.button3);
-        button4 = (Button) findViewById(R.id.button4);
-        button5 = (Button) findViewById(R.id.button5);
-        button6 = (Button) findViewById(R.id.button6);
-        button7 = (Button) findViewById(R.id.button7);
-        button8 = (Button) findViewById(R.id.button8);
-        button9 = (Button) findViewById(R.id.button9);
-        buttonClear = (Button) findViewById(R.id.buttonClear);
+        button0      = (Button) findViewById(R.id.button0);
+        button1      = (Button) findViewById(R.id.button1);
+        button2      = (Button) findViewById(R.id.button2);
+        button3      = (Button) findViewById(R.id.button3);
+        button4      = (Button) findViewById(R.id.button4);
+        button5      = (Button) findViewById(R.id.button5);
+        button6      = (Button) findViewById(R.id.button6);
+        button7      = (Button) findViewById(R.id.button7);
+        button8      = (Button) findViewById(R.id.button8);
+        button9      = (Button) findViewById(R.id.button9);
+        buttonClear  = (Button) findViewById(R.id.buttonClear);
         buttonCreate = (Button) findViewById(R.id.buttonCreate);
 
         button0.setOnClickListener(this);
@@ -72,7 +81,6 @@ public class CreateNewUser extends Activity implements View.OnClickListener {
         button9.setOnClickListener(this);
         buttonClear.setOnClickListener(this);
         buttonCreate.setOnClickListener(this);
-
     }
 
     @Override
@@ -87,6 +95,10 @@ public class CreateNewUser extends Activity implements View.OnClickListener {
         return super.onOptionsItemSelected(item);
     } // end onOptionItemSelected method
 
+    /* This method will process the buttons the user presses. The user can
+     * clear the entries on the screen, create the user account, or enter
+     * a 4-digit pin.
+     */
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
