@@ -215,6 +215,7 @@ public class MainMenu extends Activity implements View.OnClickListener {
             try {
                 BluetoothAdapter.getDefaultAdapter().cancelDiscovery();
                 mmSocket.connect();
+                Toast.makeText(getApplicationContext(), "connecting" , Toast.LENGTH_SHORT).show();
                 btProgressText.setText(btConnect);
             } catch (IOException e) {
                 //Toast.makeText(getApplicationContext(), e.getMessage() , Toast.LENGTH_SHORT).show();
@@ -231,7 +232,6 @@ public class MainMenu extends Activity implements View.OnClickListener {
             }
 
             // Attempt to send special character to lock or unlock
-            if (connected) {
                 try {
                     OutputStream mmOutStream = mmSocket.getOutputStream();
                     mmOutStream.write(toSend);
@@ -241,9 +241,8 @@ public class MainMenu extends Activity implements View.OnClickListener {
                     Log.e(TAG, "Exception during write", e);
                     //Toast.makeText(getApplicationContext(), "Catch 3", Toast.LENGTH_SHORT).show();
                 }
-            }
-            else
-                Toast.makeText(getApplicationContext(), "Device not connected.", Toast.LENGTH_SHORT).show();
+
+            
         }
         else
             Toast.makeText(getApplicationContext(), "Attempted Connect, device not paired.", Toast.LENGTH_SHORT).show();
@@ -257,12 +256,12 @@ public class MainMenu extends Activity implements View.OnClickListener {
 
             if (BluetoothDevice.ACTION_ACL_CONNECTED.equals(action)) {
                 //Do something if connected
-                //Toast.makeText(getApplicationContext(), "BT Connected", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "BT Connected", Toast.LENGTH_SHORT).show();
                 connected = true; //BT state connected
             }
             else if (BluetoothDevice.ACTION_ACL_DISCONNECTED.equals(action)) {
                 //Do something if disconnected
-                //Toast.makeText(getApplicationContext(), "BT Disconnected", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "BT Disconnected", Toast.LENGTH_SHORT).show();
                 connected = false;
             }
         }

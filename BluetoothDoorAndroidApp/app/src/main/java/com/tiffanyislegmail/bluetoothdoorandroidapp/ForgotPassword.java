@@ -10,7 +10,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 /*Description:
-
+ *
+ *
  */
 public class ForgotPassword extends Activity implements View.OnClickListener {
 
@@ -68,7 +69,7 @@ public class ForgotPassword extends Activity implements View.OnClickListener {
             if (counter == 0) {
                 Toast.makeText(context,"No more attempts. Redirecting...",Toast.LENGTH_SHORT).show();
                 sharedPrefs.setLockApp(context);
-                Intent intent = new Intent(v.getContext(), login_menu.class);
+                Intent intent = new Intent(v.getContext(), PromptPassword.class);
                 clearData();
                 startActivity(intent);
             }
