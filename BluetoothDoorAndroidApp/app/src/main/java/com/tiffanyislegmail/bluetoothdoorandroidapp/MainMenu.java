@@ -39,7 +39,7 @@ public class MainMenu extends Activity implements View.OnClickListener {
     public boolean connected       = false;
 
     // Bluetooth address & info
-    public String address                      = "20:14:03:24:51:82"; // Device address
+    public String address = "20:14:03:24:51:82"; // Device address
     private static final UUID MY_UUID  = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
     private BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
@@ -68,7 +68,7 @@ public class MainMenu extends Activity implements View.OnClickListener {
 
         // Initialize ProgressBar
         btProgressBar  = (ProgressBar) findViewById(R.id.bluetoothProgress);
-        btProgressBar.setVisibility(View.GONE);
+        btProgressBar.setVisibility(View.INVISIBLE);
 
         // Initialize shared prefs to retrieving user name
         userName = sharedPrefs.getUserName(context);
@@ -253,15 +253,7 @@ public class MainMenu extends Activity implements View.OnClickListener {
                     Log.e(TAG, "Exception during write", e);
                     //Toast.makeText(getApplicationContext(), "Catch 3", Toast.LENGTH_SHORT).show();
                 }
-<<<<<<< HEAD
 
-            
-=======
-            }
-            else
-                Toast.makeText(getApplicationContext(), "Device not connected.",
-                        Toast.LENGTH_SHORT).show();
->>>>>>> efc9398e1e6fccfd34efb342f63eb8e808a64064
         }
         else
             Toast.makeText(getApplicationContext(), "Attempted Connect, device not paired.",
@@ -275,7 +267,7 @@ public class MainMenu extends Activity implements View.OnClickListener {
             String action = intent.getAction();
 
             if (BluetoothDevice.ACTION_ACL_CONNECTED.equals(action)) {
-<<<<<<< HEAD
+
                 //Do something if connected
                 Toast.makeText(getApplicationContext(), "BT Connected", Toast.LENGTH_SHORT).show();
                 connected = true; //BT state connected
@@ -283,11 +275,10 @@ public class MainMenu extends Activity implements View.OnClickListener {
             else if (BluetoothDevice.ACTION_ACL_DISCONNECTED.equals(action)) {
                 //Do something if disconnected
                 Toast.makeText(getApplicationContext(), "BT Disconnected", Toast.LENGTH_SHORT).show();
-=======
+
                 connected = true; //BT state connected
             }
             else if (BluetoothDevice.ACTION_ACL_DISCONNECTED.equals(action)) {
->>>>>>> efc9398e1e6fccfd34efb342f63eb8e808a64064
                 connected = false;
             }
         }

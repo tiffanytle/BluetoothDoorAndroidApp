@@ -22,13 +22,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-<<<<<<< HEAD
-/*Description:
- *
- *
- */
-=======
->>>>>>> efc9398e1e6fccfd34efb342f63eb8e808a64064
+
 public class ForgotPassword extends Activity implements View.OnClickListener {
 
     EditText answerVacation, answerMakeCar, answerModelCar;
