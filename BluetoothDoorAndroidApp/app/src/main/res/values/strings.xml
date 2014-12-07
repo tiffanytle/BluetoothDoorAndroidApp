@@ -34,5 +34,9 @@
     <string name="text_bluetooth_on">Bluetooth is On</string>
     <string name="title_activity_splash_screen">SplashScreen</string>
     <string name="splash_screen_title">Android Door</string>
+    <string name="security_vacation">Where was your first vacation?</string>
+    <string name="security_car">What was the make/model of your first car?</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="save_prefs">Save user preferences</string>
 
 </resources>

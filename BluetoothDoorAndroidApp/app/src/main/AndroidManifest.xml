@@ -17,18 +17,18 @@
         <activity
             android:name=".PromptPassword"
             android:label="@string/title_activity_prompt_password"
-            android:parentActivityName=".login_menu" >
+            android:parentActivityName=".SplashScreen" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.tiffanyislegmail.bluetoothdoorandroidapp.login_menu" />
+                android:value="com.tiffanyislegmail.bluetoothdoorandroidapp.SplashScreen" />
         </activity>
         <activity
             android:name=".CreateNewUser"
             android:label="@string/title_activity_create_new_user"
-            android:parentActivityName=".login_menu" >
+            android:parentActivityName=".SplashScreen" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.tiffanyislegmail.bluetoothdoorandroidapp.login_menu" />
+                android:value="com.tiffanyislegmail.bluetoothdoorandroidapp.SplashScreen" />
         </activity>
         <activity
             android:name=".MainMenu"
@@ -47,28 +47,12 @@
                 android:value="com.tiffanyislegmail.bluetoothdoorandroidapp.PromptPassword" />
         </activity>
         <activity
-            android:name=".ResetPassword"
-            android:label="@string/title_activity_reset_password"
-            android:parentActivityName=".MainMenu" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.tiffanyislegmail.bluetoothdoorandroidapp.MainMenu" />
-        </activity>
-        <activity
             android:name=".SecurityQuestions"
             android:label="@string/title_activity_security_questions"
             android:parentActivityName=".CreateNewUser" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.tiffanyislegmail.bluetoothdoorandroidapp.CreateNewUser" />
-        </activity>
-        <activity
-            android:name=".bluetooth"
-            android:label="@string/title_activity_bluetooth"
-            android:parentActivityName=".MainMenu" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.tiffanyislegmail.bluetoothdoorandroidapp.MainMenu" />
         </activity>
         <activity
             android:name=".SplashScreen"
