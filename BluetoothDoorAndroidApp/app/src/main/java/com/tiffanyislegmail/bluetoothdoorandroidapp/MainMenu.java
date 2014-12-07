@@ -68,7 +68,7 @@ public class MainMenu extends Activity implements View.OnClickListener {
 
         // Initialize ProgressBar
         btProgressBar  = (ProgressBar) findViewById(R.id.bluetoothProgress);
-        btProgressBar.setVisibility(View.INVISIBLE);
+        btProgressBar.setVisibility(View.GONE);
 
         // Initialize shared prefs to retrieving user name
         userName = sharedPrefs.getUserName(context);
@@ -76,11 +76,9 @@ public class MainMenu extends Activity implements View.OnClickListener {
 
         //intents for checking state of bluetooth devices
         IntentFilter filter1 = new IntentFilter(BluetoothDevice.ACTION_ACL_CONNECTED);
-        IntentFilter filter2 = new IntentFilter(BluetoothDevice.ACTION_ACL_DISCONNECT_REQUESTED);
-        IntentFilter filter3 = new IntentFilter(BluetoothDevice.ACTION_ACL_DISCONNECTED);
+        IntentFilter filter2 = new IntentFilter(BluetoothDevice.ACTION_ACL_DISCONNECTED);
         this.registerReceiver(mReceiver, filter1);
         this.registerReceiver(mReceiver, filter2);
-        this.registerReceiver(mReceiver, filter3);
 
         Button clickResetPassword = (Button) findViewById(R.id.resetPasswordBtn);
         Button LockDoorBtn        = (Button) findViewById(R.id.lockDoorBtn);
@@ -276,10 +274,7 @@ public class MainMenu extends Activity implements View.OnClickListener {
                 //Do something if disconnected
                 Toast.makeText(getApplicationContext(), "BT Disconnected", Toast.LENGTH_SHORT).show();
 
-                connected = true; //BT state connected
-            }
-            else if (BluetoothDevice.ACTION_ACL_DISCONNECTED.equals(action)) {
-                connected = false;
+                connected = false; //BT state disconnected
             }
         }
     };
