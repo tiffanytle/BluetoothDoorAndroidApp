@@ -2,7 +2,7 @@
  * Author:       Tiffany Le and Thuan Chu
  * File Name:    MainMenu.java
  * Created On:   09/10/2014
- * Last updated: 12/03/2014
+ * Last updated: 12/07/2014
  *
  * Description:  User chooses which action to execute in the main
  *               menu. Following actions include unlocking door,
@@ -52,10 +52,6 @@ public class MainMenu extends Activity implements View.OnClickListener {
     TextView      userNameBox, btProgressText;
     ProgressBar   btProgressBar;
     String        userName;
-
-    String btEnable  = "Enabling Bluetooth...";
-    String btPair    = "Pairing to Android Door...";
-    String btConnect = "Connecting to Android Door...";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -166,7 +162,6 @@ public class MainMenu extends Activity implements View.OnClickListener {
     Gives user 10 seconds to accept enabling bluetooth.
      */
     private void enableBluetooth() {
-        btProgressText.setText(btEnable);
         if (!mBluetoothAdapter.isEnabled()) {
             Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(intent, 1000);
@@ -192,11 +187,10 @@ public class MainMenu extends Activity implements View.OnClickListener {
             if (device.getBondState() != BluetoothDevice.BOND_BONDED) {
                 pairedSuccess = false;
             } else {
-                btProgressText.setText(btPair);
+
                 pairedSuccess = true;
             }
         } else { // Device is already paired
-            btProgressText.setText(btPair);
             pairedSuccess = true;
         }
         return pairedSuccess;
@@ -208,6 +202,7 @@ public class MainMenu extends Activity implements View.OnClickListener {
      */
     private void connectAndSend(String action) {
         device = mBluetoothAdapter.getRemoteDevice(address);
+        boolean connectFail = false;
         BluetoothSocket mmSocket = null;
         byte[] toSend = action.getBytes();
 
@@ -226,8 +221,6 @@ public class MainMenu extends Activity implements View.OnClickListener {
             try {
                 BluetoothAdapter.getDefaultAdapter().cancelDiscovery();
                 mmSocket.connect();
-                Toast.makeText(getApplicationContext(), "connecting" , Toast.LENGTH_SHORT).show();
-                btProgressText.setText(btConnect);
             } catch (IOException e) {
                 try {
                     Log.e("","trying fallback...");
@@ -239,10 +232,14 @@ public class MainMenu extends Activity implements View.OnClickListener {
                 }
                 catch (Exception e2) {
                     Log.e("", "Couldn't establish Bluetooth connection!");
+                    Toast.makeText(getApplicationContext(), "Device cannot connect to door!",
+                            Toast.LENGTH_SHORT).show();
+                    connectFail = true;
                 }
             }
 
-            // Attempt to send special character to lock or unlock
+            if (!connectFail) {
+                // Attempt to send special character to lock or unlock
                 try {
                     OutputStream mmOutStream = mmSocket.getOutputStream();
                     mmOutStream.write(toSend);
@@ -251,6 +248,7 @@ public class MainMenu extends Activity implements View.OnClickListener {
                     Log.e(TAG, "Exception during write", e);
                     //Toast.makeText(getApplicationContext(), "Catch 3", Toast.LENGTH_SHORT).show();
                 }
+            }
 
         }
         else
@@ -267,13 +265,11 @@ public class MainMenu extends Activity implements View.OnClickListener {
             if (BluetoothDevice.ACTION_ACL_CONNECTED.equals(action)) {
 
                 //Do something if connected
-                Toast.makeText(getApplicationContext(), "BT Connected", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Starting...", Toast.LENGTH_SHORT).show();
                 connected = true; //BT state connected
             }
             else if (BluetoothDevice.ACTION_ACL_DISCONNECTED.equals(action)) {
                 //Do something if disconnected
-                Toast.makeText(getApplicationContext(), "BT Disconnected", Toast.LENGTH_SHORT).show();
-
                 connected = false; //BT state disconnected
             }
         }
