@@ -1,3 +1,15 @@
+/*----------------------------------------------------------------
+ * Author:       Tiffany Le and Thuan Chu
+ * File Name:    PromptPassword.java
+ * Created On:   09/09/2014
+ * Last updated: 12/08/2014
+ *
+ * Description:  User is prompted to enter password. If it is
+ *               incorrect, the user will have 2 additional
+ *               attempts to log on. If the user cannot type the
+ *               valid pin, the app will lock itself for 5 minutes.
+ *               The user can also click Forgot Password.
+ *----------------------------------------------------------------*/
 package com.tiffanyislegmail.bluetoothdoorandroidapp;
 
 import android.app.Activity;
@@ -9,9 +21,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-/*Description:
-
- */
 public class PromptPassword extends Activity implements View.OnClickListener {
 
     String userEntry = "";
