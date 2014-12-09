@@ -49,8 +49,7 @@ public class MainMenu extends Activity implements View.OnClickListener {
     private shared_preferences sharedPrefs = new shared_preferences();
     Activity context = this;
 
-    TextView      userNameBox, btProgressText;
-    ProgressBar   btProgressBar;
+    TextView      userNameBox;
     String        userName;
 
     @Override
@@ -60,11 +59,6 @@ public class MainMenu extends Activity implements View.OnClickListener {
 
         // Initialize TextView
         userNameBox    = (TextView) findViewById(R.id.displayUserName);
-        btProgressText = (TextView) findViewById(R.id.btProgressText);
-
-        // Initialize ProgressBar
-        btProgressBar  = (ProgressBar) findViewById(R.id.bluetoothProgress);
-        btProgressBar.setVisibility(View.GONE);
 
         // Initialize shared prefs to retrieving user name
         userName = sharedPrefs.getUserName(context);
@@ -89,7 +83,7 @@ public class MainMenu extends Activity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.lockDoorBtn:
-                btProgressBar.setVisibility(View.VISIBLE);
+                Toast.makeText(getApplicationContext(), "Starting...", Toast.LENGTH_SHORT).show();
                 enableBluetooth();
                 if(findAndPairDevice()) {
                     try {
@@ -103,12 +97,10 @@ public class MainMenu extends Activity implements View.OnClickListener {
                 } else
                     Toast.makeText(getApplicationContext(), "Android Door is out of range.",
                             Toast.LENGTH_SHORT).show();
-                btProgressBar.setVisibility(View.INVISIBLE);
-                btProgressText.setText("");
                 break;
 
             case R.id.unlockDoorBtn:
-                btProgressBar.setVisibility(View.VISIBLE);
+                Toast.makeText(getApplicationContext(), "Starting...", Toast.LENGTH_SHORT).show();
                 enableBluetooth();
                 if(findAndPairDevice()) {
                     try {
@@ -122,8 +114,6 @@ public class MainMenu extends Activity implements View.OnClickListener {
                 } else
                     Toast.makeText(getApplicationContext(), "Android Door is out of range.",
                             Toast.LENGTH_SHORT).show();
-                btProgressBar.setVisibility(View.INVISIBLE);
-                btProgressText.setText("");
                 break;
 
             case R.id.resetPasswordBtn:
@@ -167,7 +157,10 @@ public class MainMenu extends Activity implements View.OnClickListener {
             startActivityForResult(intent, 1000);
             long start = System.currentTimeMillis();
             long end = start + 10*1000; // 10 seconds * 1000 ms/sec
-            while (System.currentTimeMillis() < end); //wait 10 seconds
+            while (System.currentTimeMillis() < end) { //wait 10 seconds
+                if (mBluetoothAdapter.isEnabled())
+                    break;
+            }
         }
     }
 
@@ -183,7 +176,10 @@ public class MainMenu extends Activity implements View.OnClickListener {
             pairDevice(device);
             long start = System.currentTimeMillis();
             long end = start + 15*1000; // 15 * 1000 ms/sec = 15sec delay
-            while (System.currentTimeMillis() < end); //wait 15 seconds
+            while (System.currentTimeMillis() < end) { //wait 15 seconds
+                if (device.getBondState() == BluetoothDevice.BOND_BONDED)
+                    break;
+            }
             if (device.getBondState() != BluetoothDevice.BOND_BONDED) {
                 pairedSuccess = false;
             } else {
@@ -265,11 +261,11 @@ public class MainMenu extends Activity implements View.OnClickListener {
             if (BluetoothDevice.ACTION_ACL_CONNECTED.equals(action)) {
 
                 //Do something if connected
-                Toast.makeText(getApplicationContext(), "Starting...", Toast.LENGTH_SHORT).show();
                 connected = true; //BT state connected
             }
             else if (BluetoothDevice.ACTION_ACL_DISCONNECTED.equals(action)) {
                 //Do something if disconnected
+                Toast.makeText(getApplicationContext(), "Finished", Toast.LENGTH_SHORT).show();
                 connected = false; //BT state disconnected
             }
         }
